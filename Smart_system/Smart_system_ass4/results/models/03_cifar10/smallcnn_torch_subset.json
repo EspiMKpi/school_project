@@ -1,0 +1,14 @@
+{
+  "name": "smallcnn_torch_subset",
+  "framework": "torch",
+  "class": "SmallCNN",
+  "n_params": 545098,
+  "weights_file": "smallcnn_torch_subset.pt",
+  "self_contained": false,
+  "saved_at": "2026-09-22 00:24:37",
+  "architecture": "SmallCNN",
+  "dataset": "CIFAR-10 (5k subset)",
+  "epochs": 5,
+  "test_accuracy": 0.529,
+  "f1_macro": 0.5238250792850364
+}

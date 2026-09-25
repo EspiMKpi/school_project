@@ -1,0 +1,440 @@
+{
+  "algorithm": "AdaBoost (SAMME cho phân loại, AdaBoost.R2 cho hồi quy)",
+  "library": "scikit-learn",
+  "seed": 42,
+  "learning_rate": 0.5,
+  "note": "Mô hình mốc được huấn luyện lại trên bộ dữ liệu hiện tại trong data/, không chép lại số của notebook 01-03.",
+  "tasks": [
+    {
+      "task": "diabetes",
+      "title": "Tiểu đường (phân loại nhị phân)",
+      "kind": "binary",
+      "n_train": 160846,
+      "n_val": 34467,
+      "n_test": 34468,
+      "audit": {
+        "rows_raw": 253680,
+        "rows_after_dedup": 229781,
+        "duplicates_removed": 23899,
+        "positive_rate": 0.17288635700950036,
+        "n_features": 21
+      },
+      "weak_learner": "DecisionTreeClassifier(max_depth=3) + sample_weight cân bằng lớp",
+      "stage_grid": [
+        25,
+        50,
+        100,
+        200,
+        300
+      ],
+      "stage_selected": 50,
+      "sweep": [
+        {
+          "vòng": 25,
+          "accuracy": "0.7100",
+          "recall": "0.7563",
+          "f1_macro": "0.6370",
+          "roc_auc": "0.8027"
+        },
+        {
+          "vòng": 50,
+          "accuracy": "0.7140",
+          "recall": "0.7560",
+          "f1_macro": "0.6403",
+          "roc_auc": "0.8051"
+        },
+        {
+          "vòng": 100,
+          "accuracy": "0.7104",
+          "recall": "0.7656",
+          "f1_macro": "0.6386",
+          "roc_auc": "0.8071"
+        },
+        {
+          "vòng": 200,
+          "accuracy": "0.7108",
+          "recall": "0.7646",
+          "f1_macro": "0.6388",
+          "roc_auc": "0.8071"
+        },
+        {
+          "vòng": 300,
+          "accuracy": "0.7108",
+          "recall": "0.7651",
+          "f1_macro": "0.6389",
+          "roc_auc": "0.8071"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "AdaBoost (50 vòng, cây sâu 3)",
+          "d": "21",
+          "accuracy": "0.7140",
+          "precision": "0.3490",
+          "recall": "0.7560",
+          "f1_macro": "0.6403",
+          "roc_auc": "0.8051",
+          "fit_s": "8.5",
+          "predict_s": "0.1"
+        },
+        {
+          "model": "Random Forest (mốc)",
+          "d": "21",
+          "accuracy": "0.7229",
+          "precision": "0.3562",
+          "recall": "0.7471",
+          "f1_macro": "0.6466",
+          "roc_auc": "0.8090",
+          "fit_s": "13.7",
+          "predict_s": "0.1"
+        }
+      ],
+      "test_metrics": {
+        "AdaBoost (50 vòng, cây sâu 3)": {
+          "accuracy": 0.7202042474178949,
+          "precision": 0.35394371779627426,
+          "recall": 0.7492867930860883,
+          "f1": 0.48077958436524176,
+          "f1_macro": 0.6446429989655127,
+          "f1_weighted": 0.7518473624109145,
+          "roc_auc": 0.8078379737659325
+        },
+        "Random Forest (mốc)": {
+          "accuracy": 0.7294592085412557,
+          "precision": 0.36207179150958857,
+          "recall": 0.7413995636851821,
+          "f1": 0.4865370849622818,
+          "f1_macro": 0.6514418561197426,
+          "f1_weighted": 0.7593275062764311,
+          "roc_auc": 0.8122492426956424
+        }
+      },
+      "model_names": [
+        "AdaBoost (50 vòng, cây sâu 3)",
+        "Random Forest (mốc)"
+      ]
+    },
+    {
+      "task": "house_price",
+      "title": "Giá nhà (hồi quy trên log giá)",
+      "kind": "regression",
+      "n_train": 175000,
+      "n_val": 37500,
+      "n_test": 37500,
+      "audit": {
+        "rows_raw": 2226382,
+        "rows_clean": 1407535,
+        "kept_percent": 63.22,
+        "sample_size": 250000,
+        "n_city": 12234,
+        "n_state": 54,
+        "skew_log_price": -0.1138898593483867
+      },
+      "weak_learner": "DecisionTreeRegressor(max_depth=8)",
+      "stage_grid": [
+        10,
+        25,
+        50,
+        75,
+        100
+      ],
+      "stage_selected": 10,
+      "sweep": [
+        {
+          "vòng": 10,
+          "R2_log": "0.6294",
+          "MAE_USD": "136,519",
+          "MAPE_%": "34.6"
+        },
+        {
+          "vòng": 25,
+          "R2_log": "0.6290",
+          "MAE_USD": "138,239",
+          "MAPE_%": "34.3"
+        },
+        {
+          "vòng": 50,
+          "R2_log": "0.6238",
+          "MAE_USD": "140,166",
+          "MAPE_%": "34.2"
+        },
+        {
+          "vòng": 75,
+          "R2_log": "0.6177",
+          "MAE_USD": "141,382",
+          "MAPE_%": "34.2"
+        },
+        {
+          "vòng": 100,
+          "R2_log": "0.6104",
+          "MAE_USD": "142,847",
+          "MAPE_%": "34.4"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "AdaBoost.R2 (10 vòng, cây sâu 8)",
+          "d": "8",
+          "R2_log": "0.6294",
+          "MAE_USD": "136,519",
+          "RMSE_USD": "218,752",
+          "R2_USD": "0.5748",
+          "MAPE_%": "34.6",
+          "fit_s": "4.5",
+          "predict_s": "0.1"
+        },
+        {
+          "model": "HistGradientBoosting (mốc)",
+          "d": "8",
+          "R2_log": "0.7053",
+          "MAE_USD": "119,915",
+          "RMSE_USD": "195,939",
+          "R2_USD": "0.6589",
+          "MAPE_%": "30.5",
+          "fit_s": "1.6",
+          "predict_s": "0.1"
+        }
+      ],
+      "test_metrics": {
+        "AdaBoost.R2 (10 vòng, cây sâu 8)": {
+          "mae_log": 0.3157052131855671,
+          "rmse_log": 0.42156288263982883,
+          "r2_log": 0.6337597898694354,
+          "mae_usd": 136147.201724952,
+          "rmse_usd": 219969.99280169015,
+          "r2_usd": 0.5710922090386152,
+          "mape_percent": 34.04235888211466
+        },
+        "HistGradientBoosting (mốc)": {
+          "mae_log": 0.27753391832037083,
+          "rmse_log": 0.3774338204431941,
+          "r2_log": 0.7064223974366575,
+          "mae_usd": 120716.70861399669,
+          "rmse_usd": 199175.1841627077,
+          "r2_usd": 0.6483525206226184,
+          "mape_percent": 30.121885269754696
+        }
+      },
+      "model_names": [
+        "AdaBoost.R2 (10 vòng, cây sâu 8)",
+        "HistGradientBoosting (mốc)"
+      ]
+    },
+    {
+      "task": "ecommerce_satisfaction",
+      "title": "E-commerce: mức hài lòng (bảng + văn bản)",
+      "kind": "binary",
+      "n_train": 20118,
+      "n_val": 4312,
+      "n_test": 4312,
+      "audit": {
+        "rows_raw": 85907,
+        "rows_with_remark": 28742,
+        "negative_response_time": 3128,
+        "sat_rate_overall": 0.8245661005505954,
+        "rows_used": 28742,
+        "positive_rate": 0.7748242989353559
+      },
+      "weak_learner": "DecisionTreeClassifier(max_depth=3) + sample_weight cân bằng lớp",
+      "stage_grid": [
+        25,
+        50,
+        100,
+        200,
+        300
+      ],
+      "stage_selected": 300,
+      "sweep": [
+        {
+          "vòng": 25,
+          "accuracy": "0.7519",
+          "recall": "0.7142",
+          "f1_macro": "0.7161",
+          "roc_auc": "0.8673"
+        },
+        {
+          "vòng": 50,
+          "accuracy": "0.7609",
+          "recall": "0.7267",
+          "f1_macro": "0.7241",
+          "roc_auc": "0.8769"
+        },
+        {
+          "vòng": 100,
+          "accuracy": "0.7709",
+          "recall": "0.7396",
+          "f1_macro": "0.7333",
+          "roc_auc": "0.8830"
+        },
+        {
+          "vòng": 200,
+          "accuracy": "0.7804",
+          "recall": "0.7543",
+          "f1_macro": "0.7414",
+          "roc_auc": "0.8882"
+        },
+        {
+          "vòng": 300,
+          "accuracy": "0.7904",
+          "recall": "0.7677",
+          "f1_macro": "0.7506",
+          "roc_auc": "0.8905"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "AdaBoost (300 vòng, cây sâu 3)",
+          "d": "9,349",
+          "accuracy": "0.7904",
+          "precision": "0.9525",
+          "recall": "0.7677",
+          "f1_macro": "0.7506",
+          "roc_auc": "0.8905",
+          "fit_s": "13.0",
+          "predict_s": "0.2"
+        },
+        {
+          "model": "LogReg bảng + TF-IDF (mốc)",
+          "d": "9,349",
+          "accuracy": "0.8263",
+          "precision": "0.9417",
+          "recall": "0.8270",
+          "f1_macro": "0.7809",
+          "roc_auc": "0.8998",
+          "fit_s": "0.6",
+          "predict_s": "0.0"
+        }
+      ],
+      "test_metrics": {
+        "AdaBoost (300 vòng, cây sâu 3)": {
+          "accuracy": 0.7711038961038961,
+          "precision": 0.9421487603305785,
+          "recall": 0.7506734510625561,
+          "f1": 0.8355822088955522,
+          "f1_macro": 0.729504191055941,
+          "f1_weighted": 0.7878077398221466,
+          "roc_auc": 0.8755259915582421
+        },
+        "LogReg bảng + TF-IDF (mốc)": {
+          "accuracy": 0.8353432282003711,
+          "precision": 0.9421848739495798,
+          "recall": 0.8389703681532475,
+          "f1": 0.8875870804306523,
+          "f1_macro": 0.7899807152586538,
+          "f1_weighted": 0.8436279985280499,
+          "roc_auc": 0.8950193134575235
+        }
+      },
+      "model_names": [
+        "AdaBoost (300 vòng, cây sâu 3)",
+        "LogReg bảng + TF-IDF (mốc)"
+      ]
+    },
+    {
+      "task": "ecommerce_interest",
+      "title": "E-commerce: nhóm sản phẩm quan tâm (9 lớp)",
+      "kind": "multiclass",
+      "n_train": 4074,
+      "n_val": 873,
+      "n_test": 873,
+      "audit": {
+        "rows_raw": 85907,
+        "rows_with_remark": 28742,
+        "negative_response_time": 3128,
+        "sat_rate_overall": 0.8245661005505954,
+        "rows_labelled": 17196,
+        "rows_used": 5820,
+        "n_classes": 9
+      },
+      "weak_learner": "DecisionTreeClassifier(max_depth=3) + sample_weight cân bằng lớp",
+      "stage_grid": [
+        25,
+        50,
+        100,
+        200,
+        300
+      ],
+      "stage_selected": 100,
+      "sweep": [
+        {
+          "vòng": 25,
+          "accuracy": "0.4215",
+          "recall": "0.3279",
+          "f1_macro": "0.2740"
+        },
+        {
+          "vòng": 50,
+          "accuracy": "0.4055",
+          "recall": "0.3328",
+          "f1_macro": "0.2843"
+        },
+        {
+          "vòng": 100,
+          "accuracy": "0.3986",
+          "recall": "0.3423",
+          "f1_macro": "0.2931"
+        },
+        {
+          "vòng": 200,
+          "accuracy": "0.3918",
+          "recall": "0.3255",
+          "f1_macro": "0.2780"
+        },
+        {
+          "vòng": 300,
+          "accuracy": "0.3872",
+          "recall": "0.3309",
+          "f1_macro": "0.2796"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "AdaBoost (100 vòng, cây sâu 3)",
+          "d": "2,605",
+          "accuracy": "0.3986",
+          "precision": "0.2950",
+          "recall": "0.3423",
+          "f1_macro": "0.2931",
+          "roc_auc": "-",
+          "fit_s": "1.6",
+          "predict_s": "0.1"
+        },
+        {
+          "model": "LogReg bảng + TF-IDF (mốc)",
+          "d": "2,605",
+          "accuracy": "0.3540",
+          "precision": "0.2772",
+          "recall": "0.3053",
+          "f1_macro": "0.2696",
+          "roc_auc": "-",
+          "fit_s": "0.6",
+          "predict_s": "0.0"
+        }
+      ],
+      "test_metrics": {
+        "AdaBoost (100 vòng, cây sâu 3)": {
+          "accuracy": 0.41809851088201605,
+          "precision": 0.3549654530383254,
+          "recall": 0.3899886923272854,
+          "f1": 0.3490648333613533,
+          "f1_macro": 0.3490648333613533,
+          "f1_weighted": 0.437075450152833,
+          "roc_auc": null
+        },
+        "LogReg bảng + TF-IDF (mốc)": {
+          "accuracy": 0.35738831615120276,
+          "precision": 0.28904004312129605,
+          "recall": 0.279059920945713,
+          "f1": 0.2734647085085937,
+          "f1_macro": 0.2734647085085937,
+          "f1_weighted": 0.3838736002718116,
+          "roc_auc": null
+        }
+      },
+      "model_names": [
+        "AdaBoost (100 vòng, cây sâu 3)",
+        "LogReg bảng + TF-IDF (mốc)"
+      ]
+    }
+  ]
+}

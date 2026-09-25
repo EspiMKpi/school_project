@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.ipynb_checkpoints/
+
+# Environment
+.venv/
+env/
+venv/
+
+# Large datasets (avoid exceeding Git limits)
+data/diabetes/diabetes.csv
+data/house_price/house_price.csv
+data/ecommerce/ecommerce.csv
+*.csv
+
+# Temporary files
+*.tmp
+*.log

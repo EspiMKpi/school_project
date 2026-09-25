@@ -1,0 +1,1 @@
+../../../.agents/subagents/spm-planner.md

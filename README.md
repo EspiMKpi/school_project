@@ -2,6 +2,9 @@
 
 An autonomous, multi-agent portfolio management framework built with Google Antigravity and fused with **Everything Claude Code (ECC)**. It orchestrates 5 concurrent software engineering university courses, routes tasks to specialized review lanes, and intelligently adapts compute workloads between a **portable, low-spec laptop** and a **high-performance desktop PC**.
 
+> [!TIP]
+> **Per-Project Agents**: Each project folder has its own `AGENTS.md` and `.agents/` directory with domain-specific skills, rules, and subagents. When you open a project folder, the agent automatically becomes a specialist for that domain.
+
 ---
 
 ## 🚀 Quick Start: How to Use Everyday

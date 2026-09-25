@@ -67,9 +67,8 @@ Thumbs.db
 # Raw downloaded frameworks/archives
 ECC-main/
 
-# Standalone Course Git Repositories & Large Folders
-Smart_system_ass3/
-Smart_system_ass4/
-Smart system/
-PTTK/
-VPProjects/
+# Large data/model files inside projects (handled by per-project .gitignore)
+**/data/raw/
+**/data/processed/
+**/models/*.pth
+**/models/*.h5

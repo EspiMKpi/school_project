@@ -1,0 +1,426 @@
+{
+  "algorithm": "K-Nearest Neighbors",
+  "library": "scikit-learn",
+  "seed": 42,
+  "note": "Mô hình mốc được huấn luyện lại trên bộ dữ liệu hiện tại trong data/, không chép lại số của notebook 01-03.",
+  "tasks": [
+    {
+      "task": "diabetes",
+      "title": "Tiểu đường (phân loại nhị phân)",
+      "kind": "binary",
+      "n_train": 160846,
+      "n_val": 34467,
+      "n_test": 34468,
+      "audit": {
+        "rows_raw": 253680,
+        "rows_after_dedup": 229781,
+        "duplicates_removed": 23899,
+        "positive_rate": 0.17288635700950036,
+        "n_features": 21
+      },
+      "distance": "euclidean",
+      "k_grid": [
+        5,
+        11,
+        25,
+        51,
+        101
+      ],
+      "k_selected": 5,
+      "sweep": [
+        {
+          "k": 5,
+          "accuracy": "0.8139",
+          "recall": "0.2519",
+          "f1": "0.3188",
+          "f1_macro": "0.6055",
+          "roc_auc": "0.7116"
+        },
+        {
+          "k": 11,
+          "accuracy": "0.8242",
+          "recall": "0.2027",
+          "f1": "0.2851",
+          "f1_macro": "0.5925",
+          "roc_auc": "0.7566"
+        },
+        {
+          "k": 25,
+          "accuracy": "0.8318",
+          "recall": "0.1692",
+          "f1": "0.2581",
+          "f1_macro": "0.5816",
+          "roc_auc": "0.7838"
+        },
+        {
+          "k": 51,
+          "accuracy": "0.8331",
+          "recall": "0.1398",
+          "f1": "0.2245",
+          "f1_macro": "0.5655",
+          "roc_auc": "0.7957"
+        },
+        {
+          "k": 101,
+          "accuracy": "0.8338",
+          "recall": "0.1185",
+          "f1": "0.1977",
+          "f1_macro": "0.5525",
+          "roc_auc": "0.8015"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "KNN (k=5)",
+          "d": "21",
+          "accuracy": "0.8140",
+          "precision": "0.4343",
+          "recall": "0.2514",
+          "f1_macro": "0.6054",
+          "roc_auc": "0.7112",
+          "fit_s": "0.1",
+          "predict_s": "2.6"
+        },
+        {
+          "model": "Random Forest (mốc)",
+          "d": "21",
+          "accuracy": "0.7229",
+          "precision": "0.3562",
+          "recall": "0.7471",
+          "f1_macro": "0.6466",
+          "roc_auc": "0.8090",
+          "fit_s": "13.3",
+          "predict_s": "0.1"
+        }
+      ],
+      "test_metrics": {
+        "KNN (k=5)": {
+          "accuracy": 0.8154520134617617,
+          "precision": 0.4395670475045099,
+          "recall": 0.24534317838563519,
+          "f1": 0.31491653204092623,
+          "f1_macro": 0.6041397969252258,
+          "f1_weighted": 0.7933583365312649,
+          "roc_auc": 0.7158535581315825
+        },
+        "Random Forest (mốc)": {
+          "accuracy": 0.7294592085412557,
+          "precision": 0.36207179150958857,
+          "recall": 0.7413995636851821,
+          "f1": 0.4865370849622818,
+          "f1_macro": 0.6514418561197426,
+          "f1_weighted": 0.7593275062764311,
+          "roc_auc": 0.8122492426956424
+        }
+      },
+      "model_names": [
+        "KNN (k=5)",
+        "Random Forest (mốc)"
+      ]
+    },
+    {
+      "task": "house_price",
+      "title": "Giá nhà (hồi quy trên log giá)",
+      "kind": "regression",
+      "n_train": 175000,
+      "n_val": 37500,
+      "n_test": 37500,
+      "audit": {
+        "rows_raw": 2226382,
+        "rows_clean": 1407535,
+        "kept_percent": 63.22,
+        "sample_size": 250000,
+        "n_city": 12234,
+        "n_state": 54,
+        "skew_log_price": -0.1138898593483867
+      },
+      "distance": "euclidean",
+      "k_grid": [
+        5,
+        11,
+        25,
+        51
+      ],
+      "k_selected": 25,
+      "sweep": [
+        {
+          "k": 5,
+          "R2_log": "0.5976",
+          "MAE_USD": "140,877",
+          "MAPE_%": "36.8"
+        },
+        {
+          "k": 11,
+          "R2_log": "0.6254",
+          "MAE_USD": "136,077",
+          "MAPE_%": "35.3"
+        },
+        {
+          "k": 25,
+          "R2_log": "0.6309",
+          "MAE_USD": "134,971",
+          "MAPE_%": "35.0"
+        },
+        {
+          "k": 51,
+          "R2_log": "0.6292",
+          "MAE_USD": "135,384",
+          "MAPE_%": "35.1"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "KNN (k=25)",
+          "d": "8",
+          "R2_log": "0.6309",
+          "MAE_USD": "134,968",
+          "RMSE_USD": "217,447",
+          "R2_USD": "0.5799",
+          "MAPE_%": "35.0",
+          "fit_s": "0.4",
+          "predict_s": "2.6"
+        },
+        {
+          "model": "HistGradientBoosting (mốc)",
+          "d": "8",
+          "R2_log": "0.7053",
+          "MAE_USD": "119,915",
+          "RMSE_USD": "195,939",
+          "R2_USD": "0.6589",
+          "MAPE_%": "30.5",
+          "fit_s": "1.7",
+          "predict_s": "0.1"
+        }
+      ],
+      "test_metrics": {
+        "KNN (k=25)": {
+          "mae_log": 0.31075328151014225,
+          "rmse_log": 0.4196660364820909,
+          "r2_log": 0.6370482122607876,
+          "mae_usd": 135035.60810863238,
+          "rmse_usd": 218676.2541695903,
+          "r2_usd": 0.5761225568989291,
+          "mape_percent": 34.4089758221924
+        },
+        "HistGradientBoosting (mốc)": {
+          "mae_log": 0.27753391832037083,
+          "rmse_log": 0.3774338204431941,
+          "r2_log": 0.7064223974366575,
+          "mae_usd": 120716.70861399669,
+          "rmse_usd": 199175.1841627077,
+          "r2_usd": 0.6483525206226184,
+          "mape_percent": 30.121885269754696
+        }
+      },
+      "model_names": [
+        "KNN (k=25)",
+        "HistGradientBoosting (mốc)"
+      ]
+    },
+    {
+      "task": "ecommerce_satisfaction",
+      "title": "E-commerce: mức hài lòng (bảng + văn bản)",
+      "kind": "binary",
+      "n_train": 20118,
+      "n_val": 4312,
+      "n_test": 4312,
+      "audit": {
+        "rows_raw": 85907,
+        "rows_with_remark": 28742,
+        "negative_response_time": 3128,
+        "sat_rate_overall": 0.8245661005505954,
+        "rows_used": 28742,
+        "positive_rate": 0.7748242989353559
+      },
+      "distance": "cosine",
+      "k_grid": [
+        5,
+        11,
+        25,
+        51
+      ],
+      "k_selected": 11,
+      "sweep": [
+        {
+          "k": 5,
+          "accuracy": "0.7757",
+          "recall": "0.9267",
+          "f1": "0.8649",
+          "f1_macro": "0.6024",
+          "roc_auc": "0.6880"
+        },
+        {
+          "k": 11,
+          "accuracy": "0.7866",
+          "recall": "0.9464",
+          "f1": "0.8730",
+          "f1_macro": "0.6032",
+          "roc_auc": "0.7220"
+        },
+        {
+          "k": 25,
+          "accuracy": "0.7899",
+          "recall": "0.9581",
+          "f1": "0.8760",
+          "f1_macro": "0.5938",
+          "roc_auc": "0.7545"
+        },
+        {
+          "k": 51,
+          "accuracy": "0.7934",
+          "recall": "0.9632",
+          "f1": "0.8784",
+          "f1_macro": "0.5957",
+          "roc_auc": "0.7648"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "KNN cosin (k=11)",
+          "d": "9,349",
+          "accuracy": "0.7866",
+          "precision": "0.8101",
+          "recall": "0.9464",
+          "f1_macro": "0.6032",
+          "roc_auc": "0.7220",
+          "fit_s": "0.6",
+          "predict_s": "3.3"
+        },
+        {
+          "model": "LogReg bảng + TF-IDF (mốc)",
+          "d": "9,349",
+          "accuracy": "0.8263",
+          "precision": "0.9417",
+          "recall": "0.8270",
+          "f1_macro": "0.7809",
+          "roc_auc": "0.8998",
+          "fit_s": "1.4",
+          "predict_s": "0.1"
+        }
+      ],
+      "test_metrics": {
+        "KNN cosin (k=11)": {
+          "accuracy": 0.7799165120593692,
+          "precision": 0.8055697496167603,
+          "recall": 0.9437294223286441,
+          "f1": 0.8691936595451413,
+          "f1_macro": 0.587993469655697,
+          "f1_weighted": 0.7425492326515186,
+          "roc_auc": 0.7124911878785899
+        },
+        "LogReg bảng + TF-IDF (mốc)": {
+          "accuracy": 0.8353432282003711,
+          "precision": 0.9421848739495798,
+          "recall": 0.8389703681532475,
+          "f1": 0.8875870804306523,
+          "f1_macro": 0.7899807152586538,
+          "f1_weighted": 0.8436279985280499,
+          "roc_auc": 0.8950193134575235
+        }
+      },
+      "model_names": [
+        "KNN cosin (k=11)",
+        "LogReg bảng + TF-IDF (mốc)"
+      ]
+    },
+    {
+      "task": "ecommerce_interest",
+      "title": "E-commerce: nhóm sản phẩm quan tâm (9 lớp)",
+      "kind": "multiclass",
+      "n_train": 4074,
+      "n_val": 873,
+      "n_test": 873,
+      "audit": {
+        "rows_raw": 85907,
+        "rows_with_remark": 28742,
+        "negative_response_time": 3128,
+        "sat_rate_overall": 0.8245661005505954,
+        "rows_labelled": 17196,
+        "rows_used": 5820,
+        "n_classes": 9
+      },
+      "distance": "cosine",
+      "k_grid": [
+        5,
+        11,
+        25,
+        51
+      ],
+      "k_selected": 11,
+      "sweep": [
+        {
+          "k": 5,
+          "accuracy": "0.3345",
+          "f1_macro": "0.1920",
+          "f1_weighted": "0.3238"
+        },
+        {
+          "k": 11,
+          "accuracy": "0.3540",
+          "f1_macro": "0.1955",
+          "f1_weighted": "0.3330"
+        },
+        {
+          "k": 25,
+          "accuracy": "0.3711",
+          "f1_macro": "0.1910",
+          "f1_weighted": "0.3395"
+        },
+        {
+          "k": 51,
+          "accuracy": "0.3711",
+          "f1_macro": "0.1814",
+          "f1_weighted": "0.3313"
+        }
+      ],
+      "validation_table": [
+        {
+          "model": "KNN cosin (k=11)",
+          "d": "2,605",
+          "accuracy": "0.3551",
+          "precision": "0.2138",
+          "recall": "0.1953",
+          "f1_macro": "0.1956",
+          "roc_auc": "-",
+          "fit_s": "0.1",
+          "predict_s": "0.1"
+        },
+        {
+          "model": "LogReg bảng + TF-IDF (mốc)",
+          "d": "2,605",
+          "accuracy": "0.3540",
+          "precision": "0.2772",
+          "recall": "0.3053",
+          "f1_macro": "0.2696",
+          "roc_auc": "-",
+          "fit_s": "0.6",
+          "predict_s": "0.0"
+        }
+      ],
+      "test_metrics": {
+        "KNN cosin (k=11)": {
+          "accuracy": 0.3218785796105384,
+          "precision": 0.2921538892054517,
+          "recall": 0.20992101379300881,
+          "f1": 0.217837782707526,
+          "f1_macro": 0.217837782707526,
+          "f1_weighted": 0.3068359643137556,
+          "roc_auc": null
+        },
+        "LogReg bảng + TF-IDF (mốc)": {
+          "accuracy": 0.35738831615120276,
+          "precision": 0.28904004312129605,
+          "recall": 0.279059920945713,
+          "f1": 0.2734647085085937,
+          "f1_macro": 0.2734647085085937,
+          "f1_weighted": 0.3838736002718116,
+          "roc_auc": null
+        }
+      },
+      "model_names": [
+        "KNN cosin (k=11)",
+        "LogReg bảng + TF-IDF (mốc)"
+      ]
+    }
+  ]
+}
