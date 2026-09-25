@@ -67,8 +67,9 @@ Thumbs.db
 # Raw downloaded frameworks/archives
 ECC-main/
 
-# Large data/model files inside projects (handled by per-project .gitignore)
+# Large data/model files inside projects
 **/data/raw/
 **/data/processed/
+**/trained/
 **/models/*.pth
 **/models/*.h5

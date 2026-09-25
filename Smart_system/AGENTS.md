@@ -53,20 +53,30 @@ Smart_system/
 │   ├── 03_model_b.ipynb        # Model B training
 │   ├── 04_compare.ipynb        # Comparison & evaluation
 │   ├── demo.py                 # CLI demo launcher
-│   ├── app.py                  # Web demo entry point (Flask/Gradio/Streamlit)
+│   ├── app.py                  # Web demo entry point
 │   ├── templates/              # HTML templates (Flask demos)
-│   │   └── index.html          #   Canvas drawing page / upload page
 │   ├── static/                 # CSS, JS assets (Flask demos)
-│   │   ├── style.css
-│   │   └── canvas.js           #   Drawing logic + AJAX prediction call
-│   ├── report/
-│   │   ├── REPORT.md           # Full report in Markdown
-│   │   └── figures/            # Charts, confusion matrices, plots
-│   ├── data/                   # Dataset (gitignored if >10MB)
-│   ├── results/                # Saved metrics, CSVs
-│   └── models/                 # Saved weights (gitignored)
+│   ├── data/                   # Raw datasets (gitignored, re-downloadable)
+│   ├── trained/                # ⭐ TRAINED MODEL OUTPUTS (gitignored, sync via script)
+│   │   ├── model_a.pth         #   Saved PyTorch model
+│   │   ├── model_b.keras       #   Saved Keras model
+│   │   ├── model_c.npz         #   Saved NumPy scratch model
+│   │   └── metrics.json        #   Training metrics & hyperparams
+│   ├── results/                # Evaluation outputs (CSV, plots — small, committed to git)
+│   │   ├── comparison.csv      #   Model comparison table
+│   │   └── figures/            #   Charts, confusion matrices
+│   └── report/
+│       ├── REPORT.md           # Full report in Markdown
+│       └── figures/            # Report figures
 └── AGENTS.md
 ```
+
+> [!IMPORTANT]
+> **Folder roles — do not mix:**
+> - **`data/`** = raw input datasets (gitignored, re-downloaded or synced)
+> - **`trained/`** = trained model weights & checkpoints (gitignored, synced between devices)
+> - **`results/`** = evaluation outputs, CSVs, plots (small files, committed to git)
+> - **`report/`** = final written report (committed to git)
 
 ## 4. Available Skills & Subagents
 
