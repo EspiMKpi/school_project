@@ -1,0 +1,1604 @@
+<!doctype html><html lang='vi'><head><meta charset='utf-8'><title>Báo Cáo Tổng Kết Assignment 5</title><style>
+@page { 
+    size: A4; 
+    margin: 16mm 14mm; 
+}
+
+body {
+    font-family: "Segoe UI", "Tahoma", "DejaVu Sans", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.58;
+    color: #1a1a1a;
+    max-width: 100%;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Segoe UI Semibold", "Segoe UI", Tahoma, sans-serif;
+    line-height: 1.25;
+    break-after: avoid;
+    page-break-after: avoid;
+}
+
+h1 {
+    font-size: 18pt;
+    color: #0b3d62;
+    border-bottom: 2px solid #0b3d62;
+    padding-bottom: 5px;
+    margin-top: 26px;
+    break-before: page;
+    page-break-before: page;
+}
+
+h1:nth-of-type(1),
+h1:nth-of-type(2) {
+    break-before: auto;
+    page-break-before: auto;
+}
+
+h2 { 
+    font-size: 13.5pt; 
+    color: #14538a; 
+    margin-top: 20px; 
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+}
+
+h3 { 
+    font-size: 11.5pt; 
+    color: #2d3748; 
+    margin-top: 14px; 
+}
+
+code {
+    font-family: "Cascadia Mono", "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 9pt;
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #0f172a;
+}
+
+pre {
+    font-family: "Cascadia Mono", "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 8.5pt;
+    line-height: 1.35;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #0284c7;
+    border-radius: 5px;
+    padding: 10px 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+pre code { 
+    background: none; 
+    padding: 0; 
+    font-size: inherit; 
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 9pt;
+    margin: 14px 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+th, td { 
+    border: 1px solid #cbd5e1; 
+    padding: 6px 9px; 
+    text-align: left; 
+}
+
+th { 
+    background: #e2e8f0; 
+    font-weight: 600; 
+    color: #0f172a;
+}
+
+tr:nth-child(even) td { 
+    background: #f8fafc; 
+}
+
+blockquote {
+    margin: 12px 0;
+    padding: 8px 14px;
+    border-left: 4px solid #eab308;
+    background: #fefce8;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+blockquote p { 
+    margin: 4px 0; 
+}
+
+hr { 
+    border: none; 
+    border-top: 1px solid #cbd5e1; 
+    margin: 20px 0; 
+}
+
+ul, ol { 
+    margin: 8px 0; 
+    padding-left: 22px; 
+}
+
+li { 
+    margin: 3px 0; 
+}
+
+strong { 
+    color: #0b3d62; 
+}
+
+/* MathJax styling */
+mjx-container {
+    display: inline-block;
+    margin: 0 !important;
+}
+mjx-container[jax="SVG"][display="true"] {
+    display: block !important;
+    text-align: center;
+    margin: 12px 0 !important;
+}
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  startup: {
+    pageReady: () => {
+      return MathJax.startup.defaultPageReady().then(() => {
+        document.body.classList.add('mathjax-ready');
+      });
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head><body><h1>BÁO CÁO TỔNG KẾT DỰ ÁN (FINAL COMPREHENSIVE REPORT)</h1>
+<h1>NGHIÊN CỨU, XÂY DỰNG, TĂNG CƯỜNG DỮ LIỆU VÀ ĐÁNH GIÁ ĐỐI SÁNH MẠNG NƠ-RON TÍCH CHẬP (CNN) TRÊN HAI NỀN TẢNG KERAS VÀ PYTORCH</h1>
+<h3>(ASSIGNMENT 5 — CONVOLUTIONAL NEURAL NETWORKS BENCHMARK, DATA AUGMENTATION &amp; REAL-WORLD ALPR)</h3>
+<p><strong>Học phần:</strong> Phát triển Hệ thống Thông minh (Developing Smart Systems / AI / ML / DL)<br />
+<strong>Môi trường thực nghiệm:</strong> Python 3.14 · PyTorch 2.11+cu128 (NVIDIA GeForce RTX 3060 12GB VRAM GPU) · TensorFlow 2.22 / Keras 3.16 (CPU)<br />
+<strong>Học viên thực hiện:</strong> Nguyễn Đại Dũng (Mã sinh viên / Lớp: 103-1)<br />
+<strong>Toàn bộ số liệu thực nghiệm được đo đạc trực tiếp từ các đợt chạy độc lập trên hệ thống cục bộ (<code>results/comparison_all_models.csv</code>, <code>models_keras/</code>, <code>models_pytorch/</code>).</strong></p>
+<hr />
+<h2>MỤC LỤC CHI TIẾT (TABLE OF CONTENTS)</h2>
+<h3>PHẦN I: BÁO CÁO KHOA HỌC &amp; PHÂN TÍCH CHUYÊN SÂU</h3>
+<ul>
+<li><strong><a href="#chương-1-đề-bài-phạm-vi-và-môi-trường-thực-nghiệm">Chương 1: Đề bài, Phạm vi và Môi trường Thực nghiệm</a></strong></li>
+<li>1.1 Yêu cầu đề bài &amp; Bốn trụ cột công việc cốt lõi</li>
+<li>1.2 Nguyên tắc đối chuẩn công bằng (The Strict Fairness Rule)</li>
+<li>1.3 Môi trường phần cứng, phần mềm và cảnh báo đo lường thời gian (GPU vs CPU)</li>
+<li><strong><a href="#chương-2-cơ-sở-lý-thuyết-nền-tảng-về-mạng-nơ-ron-tích-chập-cnn">Chương 2: Cơ sở Lý thuyết Nền tảng về Mạng Nơ-ron Tích chập (CNN)</a></strong></li>
+<li>2.1 Bản chất toán học của phép tính tích chập (Convolution Operation) 2D và 1D</li>
+<li>2.2 Ba nguyên lý ưu việt của CNN so với MLP: Trường tiếp nhận cục bộ, Chia sẻ trọng số và Bất biến dịch chuyển</li>
+<li>2.3 Cơ chế lấy mẫu không gian: Max Pooling vs Average Pooling</li>
+<li>2.4 Kỹ thuật điều hòa hiện đại: Batch Normalization và Dropout</li>
+<li>2.5 Công thức giải tích đếm tham số ($N_{\text{params}}$) và kích thước Feature Map</li>
+<li>2.6 Hệ thống chỉ số đánh giá đa chiều: Accuracy, Precision, Recall, Macro-F1</li>
+<li><strong><a href="#chương-3-khảo-sát-chuyên-sâu-và-tiền-xử-lý-3-bộ-dữ-liệu-mới">Chương 3: Khảo sát Chuyên sâu và Tiền xử lý 3 Bộ Dữ liệu Mới</a></strong></li>
+<li>3.1 Bộ dữ liệu 1: Fashion-MNIST (Ảnh đơn sắc 10 lớp thời trang Zalando)</li>
+<li>3.2 Bộ dữ liệu 2: SVHN (Street View House Numbers - Ảnh màu tự nhiên Google Street View)</li>
+<li>3.3 Bộ dữ liệu 3: CDC Diabetes Health Indicators (Dữ liệu bảng y tế quy mô lớn)</li>
+<li>3.4 Kỹ thuật Tăng cường Dữ liệu Bảng (Data Augmentation): Feature Mixup &amp; Gaussian Jittering nâng từ 253k lên 513k dòng</li>
+<li>3.5 Đường ống tiền xử lý và lưu trữ dữ liệu thống nhất (<code>data_prep_new.py</code>)</li>
+<li><strong><a href="#chương-4-hai-môi-trường-cài-đặt-keras-vs-pytorch-và-bảng-đối-chiếu-mã-nguồn-api">Chương 4: Hai Môi trường Cài đặt Keras vs PyTorch và Bảng Đối chiếu Mã nguồn API</a></strong></li>
+<li>4.1 So sánh mức độ trừu tượng phần mềm: TensorFlow/Keras vs PyTorch</li>
+<li>4.2 Bảng đối chiếu hàm và lớp API tương đương 1-1 (Layers, Activations, Losses, Optimizers, Training loops)</li>
+<li>4.3 Khác biệt về định dạng Tensor dữ liệu: Channels-Last (NHWC) vs Channels-First (NCHW)</li>
+<li><strong><a href="#chương-5-chi-tiết-thực-nghiệm-bài-toán-1--fashion-mnist-2d-cnn-phân-loại-thời-trang">Chương 5: Chi tiết Thực nghiệm Bài toán 1 — Fashion-MNIST (2D-CNN Phân loại Thời trang)</a></strong></li>
+<li>5.1 Kiến trúc chi tiết 3-layer (nông) và 5-layer (sâu có BatchNorm + Dropout)</li>
+<li>5.2 Bảng kết quả đối chuẩn 4 cấu hình (Keras vs PyTorch)</li>
+<li>5.3 Phân tích ma trận nhầm lẫn (Confusion Matrix) và Error Analysis các cặp lớp khó</li>
+<li>5.4 Cải tiến kiến trúc chuyên sâu: Enhanced 2D-ResBlock CNN đạt đỉnh cao 94.08%</li>
+<li><strong><a href="#chương-6-chi-tiết-thực-nghiệm-bài-toán-2--svhn-street-numbers-ảnh-màu-tự-nhiên">Chương 6: Chi tiết Thực nghiệm Bài toán 2 — SVHN Street Numbers (Ảnh Màu Tự Nhiên)</a></strong></li>
+<li>6.1 Thách thức nhận diện số nhà ngoài đời thực: Nhiễu ánh sáng, bóng đổ và số phụ</li>
+<li>6.2 Bảng kết quả thực nghiệm 4 cấu hình: Tác động vượt bậc của độ sâu và BatchNorm (+6.44% đến +7.10%)</li>
+<li>6.3 Phân tích ma trận nhầm lẫn &amp; nguyên nhân lỗi phân loại</li>
+<li>6.4 Mở rộng đột phá: Xây dựng Mô hình Nhận diện Ký tự Biển số Đa năng (PlateCharCNN 36 lớp, 99.77% Val Acc)</li>
+<li><strong><a href="#chương-7-chi-tiết-thực-nghiệm-bài-toán-3--cdc-diabetes-health-indicators-1d-cnn">Chương 7: Chi tiết Thực nghiệm Bài toán 3 — CDC Diabetes Health Indicators (1D-CNN)</a></strong></li>
+<li>7.1 Mô hình hóa dữ liệu bảng dưới dạng tensor chuỗi 1D: Nguyên lý và Kiến trúc</li>
+<li>7.2 Đánh giá tác động của Data Augmentation trên tập dữ liệu mở rộng 513.703 dòng</li>
+<li>7.3 Bảng so sánh thực nghiệm 4 cấu hình 1D-CNN</li>
+<li>7.4 Chuẩn hóa đặc trưng y tế chuẩn mực với StandardScaler &amp; Kiến trúc Enhanced 1D-ResCNN (74.89% Acc, 0.7079 Macro-F1)</li>
+<li><strong><a href="#chương-8-đối-sánh-đa-chiều-phân-tích-hiệu-năng--tương-tác-phần-cứngphần-mềm">Chương 8: Đối sánh Đa chiều, Phân tích Hiệu năng &amp; Tương tác Phần cứng/Phần mềm</a></strong></li>
+<li>8.1 Bảng tổng hợp đối chuẩn toàn diện 12 cấu hình thực nghiệm gốc + các cấu hình nâng cao</li>
+<li>8.2 Phân tích gia tốc phần cứng: GPU NVIDIA RTX 3060 CUDA vượt trội CPU Keras lên tới gần 39 lần</li>
+<li>8.3 Phân tích tương quan giữa số lượng tham số và độ chính xác phân loại</li>
+<li>8.4 Đánh giá tính hội tụ và độ ổn định qua đồ thị Training Loss &amp; Accuracy Curves</li>
+<li><strong><a href="#chương-9-ứng-dụng-thực-tiễn--hệ-thống-nhận-diện-biển-số-xe-đời-thực-alpr--web-demo">Chương 9: Ứng dụng Thực tiễn — Hệ thống Nhận diện Biển số Xe Đời Thực (ALPR) &amp; Web Demo</a></strong></li>
+<li>9.1 Bài toán nhận diện biển số xe hoàn chỉnh (Full ALPR) và thách thức ảnh chụp đời thực</li>
+<li>9.2 Thuật toán phân đoạn đa giả thuyết: Adaptive Local Thresholding, Multi-Polarity &amp; Baseline Line Clustering</li>
+<li>9.3 Kết quả thực nghiệm kiểm thử 100% trên ảnh thực tế đường phố (<code>36-AD - 688.88</code>, <code>50C - 17.15</code>, <code>51G - 123.45</code>, <code>30A - 888.88</code>)</li>
+<li>9.4 Ứng dụng Web Demo Streamlit tương tác thời gian thực (<code>app.py</code>) với 3 phân hệ trực quan</li>
+<li><strong><a href="#chương-10-tổng-kết-đánh-giá-hạn-chế-và-đề-xuất-hướng-nghiên-cứu">Chương 10: Tổng kết, Đánh giá Hạn chế và Đề xuất Hướng Nghiên cứu</a></strong></li>
+<li>10.1 Bốn bài học kỹ thuật cốt lõi rút ra từ thực nghiệm</li>
+<li>10.2 Các hạn chế phương pháp luận</li>
+<li>10.3 Định hướng nghiên cứu và phát triển tiếp theo</li>
+</ul>
+<h3>PHẦN II: TÓM LƯỢC TOÀN VĂN THỰC NGHIỆM 5 JUPYTER NOTEBOOKS</h3>
+<ul>
+<li><strong><a href="#phụ-lục-a-notebook-01--cơ-sở-lý-thuyết-cnn--code-đối-chiếu-keras-vs-pytorch">Phụ lục A: Notebook 01 — Cơ sở Lý thuyết CNN &amp; Code đối chiếu Keras vs PyTorch</a></strong> (<code>01_cnn_theory_and_code.ipynb</code>)</li>
+<li><strong><a href="#phụ-lục-b-notebook-02--chuẩn-bị-dữ-liệu--kỹ-thuật-tăng-cường-dữ-liệu-bảng">Phụ lục B: Notebook 02 — Chuẩn bị Dữ liệu &amp; Kỹ thuật Tăng cường Dữ liệu Bảng</a></strong> (<code>02_data_preparation_and_augmentation.ipynb</code>)</li>
+<li><strong><a href="#phụ-lục-c-notebook-03--thực-nghiệm-huấn-luyện--đánh-giá-trên-keras">Phụ lục C: Notebook 03 — Thực nghiệm Huấn luyện &amp; Đánh giá trên Keras</a></strong> (<code>03_keras_experiments.ipynb</code>)</li>
+<li><strong><a href="#phụ-lục-d-notebook-04--thực-nghiệm-huấn-luyện--đánh-giá-trên-pytorch-gpu">Phụ lục D: Notebook 04 — Thực nghiệm Huấn luyện &amp; Đánh giá trên PyTorch GPU</a></strong> (<code>04_pytorch_experiments.ipynb</code>)</li>
+<li><strong><a href="#phụ-lục-e-notebook-05--đánh-giá-đối-chuẩn-tổng-hợp--trực-quan-hóa">Phụ lục E: Notebook 05 — Đánh giá Đối chuẩn Tổng hợp &amp; Trực quan hóa</a></strong> (<code>05_comparison_and_benchmarking.ipynb</code>)</li>
+</ul>
+<h3>PHẦN III: TOÀN VĂN MÃ NGUỒN CỐT LÕI &amp; BẢNG THUẬT NGỮ CHUYÊN NGÀNH</h3>
+<ul>
+<li><strong><a href="#phụ-lục-f-toàn-văn-mã-nguồn-hệ-thống-cốt-lõi">Phụ lục F: Toàn văn Mã nguồn Hệ thống Cốt lõi</a></strong></li>
+<li>F.1 Module Chuẩn bị và Tăng cường Dữ liệu (<code>data_prep_new.py</code>)</li>
+<li>F.2 Module Huấn luyện Mô hình Nâng cao (<code>train_enhanced_models.py</code>)</li>
+<li>F.3 Ứng dụng Web Demo Tương tác Thời gian thực (<code>app.py</code>)</li>
+<li><strong><a href="#phụ-lục-g-bảng-tra-cứu-thuật-ngữ-chuyên-ngành-deep-learning--cnn-việt--anh">Phụ lục G: Bảng Tra cứu Thuật ngữ Chuyên ngành Deep Learning &amp; CNN Việt – Anh</a></strong></li>
+</ul>
+<hr />
+<h1>PHẦN I: BÁO CÁO KHOA HỌC &amp; PHÂN TÍCH CHUYÊN SÂU</h1>
+<hr />
+<h1>Chương 1: Đề bài, Phạm vi và Môi trường Thực nghiệm</h1>
+<h2>1.1 Yêu cầu đề bài &amp; Bốn trụ cột công việc cốt lõi</h2>
+<p>Kế thừa và phát triển từ bài toán đối sánh nền tảng của Assignment 4, <strong>Assignment 5</strong> đặt trọng tâm vào việc <strong>chuyên sâu hóa Mạng nơ-ron Tích chập (Convolutional Neural Networks - CNN)</strong> trên các bộ dữ liệu mới, mang tính thực tế cao và phức tạp hơn rất nhiều, kết hợp với các kỹ thuật hiện đại như <strong>Tăng cường dữ liệu (Data Augmentation)</strong>, <strong>Chuẩn hóa khối (Batch Normalization)</strong>, <strong>Dropout</strong>, <strong>Khối phần dư (Residual Blocks)</strong> và <strong>Ứng dụng nhận diện toàn bộ chuỗi ký tự biển số xe ngoài đời thực (Full ALPR)</strong>.</p>
+<p>Bốn yêu cầu học thuật trung tâm của Assignment 5 bao gồm:</p>
+<pre><code class="language-mermaid">flowchart TD
+    Req1[&quot;&lt;b&gt;Yêu cầu 1: Cơ sở Lý thuyết &amp; Đối chiếu Code&lt;/b&gt;&lt;br/&gt;Hệ thống hóa toán học CNN &amp; Lập bảng ánh xạ API 1-1 giữa Keras và PyTorch&quot;]
+    Req2[&quot;&lt;b&gt;Yêu cầu 2: Dữ liệu Mới &amp; Tăng cường Dữ liệu&lt;/b&gt;&lt;br/&gt;Fashion-MNIST (70k ảnh), SVHN (99k ảnh màu), CDC Diabetes (&gt;513k dòng sau Mixup)&quot;]
+    Req3[&quot;&lt;b&gt;Yêu cầu 3: Huấn luyện &amp; Đánh giá trên Keras&lt;/b&gt;&lt;br/&gt;Xây dựng 6 mô hình Keras (3-layer &amp; 5-layer), lưu trữ 3 folder độc lập&quot;]
+    Req4[&quot;&lt;b&gt;Yêu cầu 4: Huấn luyện &amp; Đánh giá trên PyTorch&lt;/b&gt;&lt;br/&gt;Xây dựng 6 mô hình PyTorch (3-layer &amp; 5-layer) tăng tốc GPU RTX 3060, lưu trữ 3 folder độc lập&quot;]
+    Req5[&quot;&lt;b&gt;Mở rộng: Ứng dụng Đời thực &amp; Web Demo&lt;/b&gt;&lt;br/&gt;PlateCharCNN (36 lớp, 99.77%), Bộ giải mã ALPR đa giả thuyết, Streamlit Web App&quot;]
+
+    Req1 --&gt; Req2 --&gt; Req3 --&gt; Req4 --&gt; Req5
+</code></pre>
+<ol>
+<li><strong>Hệ thống hóa lý thuyết &amp; Bảng đối chiếu code</strong>: Trình bày bản chất các khái niệm cốt lõi của CNN (Phép tích chập, Kernel, Stride, Padding, Receptive Field, Weight Sharing, Pooling, Flatten, Fully Connected, Batch Normalization, Dropout, Loss, Optimizer) và lập bảng ánh xạ đối chiếu trực tiếp các hàm/lớp giữa TensorFlow/Keras và PyTorch.</li>
+<li><strong>Khảo sát &amp; Chuẩn bị 3 bộ dữ liệu mới hoàn toàn</strong>:
+   * <strong>Fashion-MNIST</strong>: 70.000 ảnh sản phẩm thời trang Zalando 10 lớp kích thước $28 \times 28 \times 1$ (thay thế MNIST chữ số).
+   * <strong>SVHN (Street View House Numbers)</strong>: 99.289 ảnh màu $32 \times 32 \times 3$ số nhà ngoài đời thực từ Google Street View (thay thế CIFAR-10).
+   * <strong>CDC Diabetes Health Indicators</strong>: Dữ liệu bảng y tế lâm sàng quy mô lớn với 21 chỉ số sức khỏe. Đặc biệt, nghiên cứu áp dụng kỹ thuật <strong>Tăng cường dữ liệu (Data Augmentation)</strong> bằng giải thuật <strong>Nội suy đặc trưng (Feature Mixup)</strong> kết hợp <strong>Nhiễu vi mô Gaussian</strong> để cân bằng dữ liệu, nâng quy mô từ <strong>253.680 dòng</strong> lên <strong>513.703 dòng</strong>.</li>
+<li><strong>Huấn luyện &amp; Đánh giá 6 mô hình trên Keras</strong>: Thiết kế kiến trúc 3-layer (nông) và 5-layer (sâu tích hợp BatchNorm và Dropout) cho cả 3 bộ dữ liệu, lưu trữ kết quả và trọng số trong 3 thư mục độc lập (<code>models_keras/01_fashion_mnist/</code>, <code>02_svhn/</code>, <code>03_diabetes/</code>).</li>
+<li><strong>Huấn luyện &amp; Đánh giá 6 mô hình trên PyTorch (GPU RTX 3060)</strong>: Xây dựng các mô hình với cấu hình tham số tương đương trên nền tảng PyTorch, tận dụng nhân CUDA trên GPU chuyên dụng, lưu trữ trong 3 thư mục độc lập (<code>models_pytorch/01_fashion_mnist/</code>, <code>02_svhn/</code>, <code>03_diabetes/</code>).</li>
+<li><strong>Đánh giá đối chuẩn đa chiều &amp; Ứng dụng thực tiễn</strong>: Đo lường định lượng và so sánh cả 12 cấu hình thực nghiệm trên cùng các thước đo: Test Loss, Test Accuracy, Macro-F1, số lượng tham số và thời gian huấn luyện. Mở rộng phát triển ứng dụng nhận diện trọn vẹn biển số xe thực tế (Full ALPR) và đóng gói thành Web Demo tương tác trực quan qua Streamlit (<code>app.py</code>).</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Hạng mục</th>
+<th>Quy mô / Đặc trưng</th>
+<th>Kiến trúc kiểm thử</th>
+<th>Keras Folder</th>
+<th>PyTorch Folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fashion-MNIST</strong></td>
+<td>70.000 ảnh xám ($28 \times 28 \times 1$), 10 lớp thời trang</td>
+<td>3-Layer CNN (50k params) &amp; 5-Layer CNN (469k params)</td>
+<td><code>models_keras/01_fashion_mnist/</code></td>
+<td><code>models_pytorch/01_fashion_mnist/</code></td>
+</tr>
+<tr>
+<td><strong>SVHN</strong></td>
+<td>99.289 ảnh màu RGB ($32 \times 32 \times 3$), 10 lớp số nhà</td>
+<td>3-Layer CNN (60k params) &amp; 5-Layer CNN (592k params)</td>
+<td><code>models_keras/02_svhn/</code></td>
+<td><code>models_pytorch/02_svhn/</code></td>
+</tr>
+<tr>
+<td><strong>CDC Diabetes (1D)</strong></td>
+<td>513.703 dòng (sau Data Augmentation), 21 thuộc tính, 3 lớp</td>
+<td>1D-CNN 3-Layer (7k params) &amp; 1D-CNN 5-Layer (43k params)</td>
+<td><code>models_keras/03_diabetes/</code></td>
+<td><code>models_pytorch/03_diabetes/</code></td>
+</tr>
+<tr>
+<td><strong>Full ALPR Engine</strong></td>
+<td>Nhận diện toàn bộ biển số xe thực tế (36 ký tự 0-9 &amp; A-Z)</td>
+<td>PlateCharCNN (410k params) + Multi-Hypothesis Line Clustering</td>
+<td>—</td>
+<td><code>models_pytorch/02_svhn/model_plate_alpr.pth</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>1.2 Nguyên tắc đối chuẩn công bằng (The Strict Fairness Rule)</h2>
+<p>Để việc so sánh giữa hai nền tảng framework (Keras vs. PyTorch) và giữa hai trường phái kiến trúc (3-layer vs. 5-layer) mang đầy đủ giá trị khoa học thực nghiệm, nghiên cứu thiết lập và tuân thủ chặt chẽ <strong>Quy tắc Công bằng Tuyệt đối (The Strict Fairness Rule)</strong>:</p>
+<p>$$\text{Identical Dataset Partition} + \text{Matching Architecture Topology} + \text{Unified Hyperparameters}$$</p>
+<ol>
+<li><strong>Cùng Phép phân chia Dữ liệu (Identical Split)</strong>: Toàn bộ dữ liệu train/test được tiền xử lý và lưu cố định thành các tệp <code>.npz</code> đồng bộ tại thư mục <code>data/</code>. Cả Keras và PyTorch đều đọc trực tiếp từ cùng một mảng bộ nhớ (byte-level identical).</li>
+<li><strong>Cùng Hình học Kiến trúc (Matching Topology)</strong>: Số kênh đầu vào/đầu ra, kích thước bộ lọc ($3 \times 3$ hoặc $1 \times 3$), bước trượt ($S=1$), cơ chế đệm viền ($P=1$ với <code>same</code>), tỷ lệ lấy mẫu Max Pooling ($2 \times 2$ với $S=2$), tỷ lệ Dropout ($p=0.25$ và $p=0.5$) được thiết kế đồng nhất. Tổng số tham số học được giữa Keras và PyTorch sai khác nhỏ hơn 0.15% (chỉ do cách Keras đếm 2 tham số không học được trong Batch Normalization).</li>
+<li><strong>Cùng Bộ Siêu tham số (Unified Hyperparameters)</strong>:
+   * Số lượng Epochs: 10 epochs cho tất cả các mô hình.
+   * Kích thước Mini-batch: 128 cho dữ liệu hình ảnh (Fashion-MNIST, SVHN); 256 cho dữ liệu bảng quy mô lớn (Diabetes).
+   * Thuật toán Tối ưu hóa: Adam với tốc độ học cơ sở $\eta = 10^{-3}$, các hệ số suy giảm xung lượng $\beta_1 = 0.9, \beta_2 = 0.999$, $\epsilon = 10^{-7}$.
+   * Hàm mất mát: Cross-Entropy cho bài toán phân loại đa lớp.</li>
+</ol>
+<hr />
+<h2>1.3 Môi trường phần cứng, phần mềm và cảnh báo đo lường thời gian (GPU vs CPU)</h2>
+<p>Toàn bộ các thực nghiệm được vận hành trên máy trạm chuyên dụng với cấu hình chi tiết:
+- <strong>Hệ điều hành</strong>: Microsoft Windows 11 Pro 64-bit
+- <strong>Bộ vi xử lý (CPU)</strong>: Đa nhân x86_64, kiến trúc 64-bit
+- <strong>Bộ xử lý đồ họa (GPU)</strong>: <strong>NVIDIA GeForce RTX 3060 Desktop GPU (12GB GDDR6 VRAM, Compute Capability 8.6)</strong>
+- <strong>Phiên bản CUDA &amp; cuDNN</strong>: CUDA Toolkit 12.8, cuDNN accelerated runtime
+- <strong>Môi trường Python</strong>: Python 3.14 (Anaconda Distribution)
+- <strong>Phiên bản Thư viện Học sâu</strong>: PyTorch 2.11+cu128, TensorFlow 2.22 / Keras 3.16.</p>
+<blockquote>
+<p>[!WARNING]
+<strong>CẢNH BÁO QUAN TRỌNG VỀ ĐO LƯỜNG THỜI GIAN THỰC THI (GPU VS. CPU):</strong><br />
+Kể từ bản phát hành TensorFlow 2.10, Google chính thức dừng hỗ trợ GPU native trên hệ điều hành Windows (chỉ hỗ trợ GPU qua môi trường máy ảo WSL2). Do đó, trong toàn bộ các thực nghiệm trên Windows của Assignment 5:
+- <strong>PyTorch</strong> tận dụng trực tiếp 3.584 nhân CUDA và 12GB bộ nhớ GDDR6 băng thông lớn của card đồ họa <strong>NVIDIA GeForce RTX 3060</strong>.
+- <strong>Keras / TensorFlow</strong> vận hành hoàn toàn trên <strong>CPU</strong>.  </p>
+<p>Sự chênh lệch ở cột <code>Train_Time_s</code> giữa PyTorch và Keras phản ánh sự khác biệt về <strong>nền tảng phần cứng tính toán (GPU Tensor Cores vs. CPU SIMD)</strong>, không đại diện cho sự chênh lệch về hiệu quả thuật toán giữa hai thư viện. Phép đo này mang ý nghĩa minh chứng thực tiễn: <strong>sức mạnh áp đảo của GPU khi xử lý song song các ma trận tích chập 4D trong Deep Learning</strong>.</p>
+</blockquote>
+<hr />
+<h1>Chương 2: Cơ sở Lý thuyết Nền tảng về Mạng Nơ-ron Tích chập (CNN)</h1>
+<h2>2.1 Bản chất toán học của phép tính tích chập (Convolution Operation) 2D và 1D</h2>
+<p>Trong học sâu, <strong>Mạng nơ-ron Tích chập (Convolutional Neural Network - CNN)</strong> là một lớp kiến trúc mạng chuyên biệt được thiết kế để xử lý dữ liệu có cấu trúc lưới không gian (spatial grid data) như ảnh 2D, tín hiệu âm thanh 1D, hoặc chuỗi thuộc tính dạng bảng.</p>
+<h3>Phép tích chập rời rạc 2D (2D Discrete Convolution)</h3>
+<p>Cho ảnh đầu vào $X \in \mathbb{R}^{H \times W \times C_{\text{in}}}$ và một bộ lọc (kernel) $K \in \mathbb{R}^{K_h \times K_w \times C_{\text{in}}}$, giá trị tại tọa độ $(i, j)$ của bản đồ đặc trưng đầu ra (feature map) $Y \in \mathbb{R}^{H_{\text{out}} \times W_{\text{out}}}$ được tính bằng tích vô hướng giữa kernel và vùng lân cận tương ứng:</p>
+<p>$$Y(i, j) = (X * K)(i, j) = \sum_{c=1}^{C_{\text{in}}} \sum_{m=-k_h}^{k_h} \sum_{n=-k_w}^{k_w} X(i + m, j + n, c) \cdot K(m, n, c) + b$$</p>
+<p>Trong đó $b$ là hệ số điều chỉnh (bias). Phép toán này trượt bộ lọc qua từng vị trí của ảnh để phát hiện các mẫu hình cục bộ (cạnh, góc, vân bề mặt, họa tiết).</p>
+<h3>Phép tích chập 1D (1D Convolution) cho dữ liệu bảng</h3>
+<p>Đối với chuỗi đặc trưng 1D $X \in \mathbb{R}^{L \times C_{\text{in}}}$ (như 21 chỉ số sức khỏe của bệnh nhân), phép tích chập 1D sử dụng kernel kích thước $K_w \times C_{\text{in}}$ trượt dọc theo trục đặc trưng:</p>
+<p>$$Y(i) = \sum_{c=1}^{C_{\text{in}}} \sum_{m=-k}^{k} X(i + m, c) \cdot K(m, c) + b$$</p>
+<p>Phép toán này cho phép mô hình trích xuất các <strong>tổ hợp tương quan cục bộ giữa các thuộc tính liền kề</strong> (ví dụ tương quan giữa Huyết áp, Cholesterol và Chỉ số BMI) mà không cần kết nối toàn bộ mọi đặc trưng như tầng Dense truyền thống.</p>
+<hr />
+<h2>2.2 Ba nguyên lý ưu việt của CNN so với MLP</h2>
+<p>Mạng nơ-ron truyền thẳng (MLP) bộc lộ ba điểm yếu chí tử khi xử lý dữ liệu ảnh:
+1. <strong>Sự bùng nổ số lượng tham số</strong>: Nếu duỗi phẳng ảnh màu SVHN $32 \times 32 \times 3 = 3.072$ điểm ảnh vào một tầng ẩn Dense 1.024 nơ-ron, riêng tầng này đã tiêu tốn $3.072 \times 1.024 \approx 3.15 \times 10^6$ tham số. Với ảnh độ phân giải thực tế, mô hình sẽ ngay lập tức quá tải bộ nhớ và overfitting trầm trọng.
+2. <strong>Phá vỡ cấu trúc không gian (Spatial Topology Destruction)</strong>: Việc duỗi phẳng ma trận ảnh thành vector 1D làm mất hoàn toàn mối liên hệ không gian giữa các pixel liền kề (trên - dưới, trái - phải).
+3. <strong>Mất tính bất biến với phép tịnh tiến (Translation Invariance)</strong>: MLP phải học lại hoàn toàn đặc trưng của một chữ số nếu chữ số đó bị dịch chuyển sang góc khác của bức ảnh.</p>
+<p>CNN giải quyết triệt để các vấn đề trên nhờ ba nguyên lý nền tảng:</p>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────────────────────────────┐
+│                             BA NGUYÊN LÝ NỀN TẢNG CỦA CNN                        │
+├──────────────────────────┬──────────────────────────┬────────────────────────────┤
+│ 1. Trường tiếp nhận      │ 2. Chia sẻ trọng số      │ 3. Bất biến dịch chuyển    │
+│    cục bộ (Receptive)    │    (Weight Sharing)      │    (Translation Invariance)│
+├──────────────────────────┼──────────────────────────┼────────────────────────────┤
+│ Nơ-ron chỉ kết nối với   │ Cùng một bộ lọc (kernel) │ Khi kết hợp với Pooling,   │
+│ một vùng lân cận nhỏ     │ được quét chung trên     │ phản hồi của mạng giữ      │
+│ (3x3 hoặc 5x5) thay vì   │ toàn bộ ảnh. Số lượng    │ nguyên giá trị ngay cả     │
+│ toàn bộ bức ảnh.         │ tham số độc lập với kích │ khi vật thể bị dịch chuyển │
+│                          │ thước ảnh ngõ vào.       │ tọa độ trong không gian.   │
+└──────────────────────────┴──────────────────────────┴────────────────────────────┘
+</code></pre>
+<hr />
+<h2>2.3 Cơ chế lấy mẫu không gian: Max Pooling vs Average Pooling</h2>
+<p>Tầng lấy mẫu (Pooling) có nhiệm vụ giảm độ phân giải không gian của Feature Map, giúp:
+1. Giảm thiểu khối lượng tính toán cho các tầng tiếp theo.
+2. Mở rộng <strong>Trường tiếp nhận hiệu dụng (Effective Receptive Field)</strong> của các tầng tích chập sâu hơn.
+3. Tạo tính bất biến nhẹ đối với các biến dạng hình học nhỏ.</p>
+<h3>Max Pooling</h3>
+<p>Chọn giá trị lớn nhất trong cửa sổ kích thước $P_h \times P_w$ (thường là $2 \times 2$, bước trượt $S=2$):</p>
+<p>$$Y_{\text{max}}(i, j) = \max_{m, n \in [0, 1]} X(2i + m, 2j + n)$$</p>
+<p><em>Ưu điểm:</em> Giữ lại các đặc trưng kích hoạt mạnh nhất (cạnh sắc nét, đỉnh vân, tín hiệu biên nổi bật), rất hiệu quả trong phân loại ảnh và nhận diện ký tự (Fashion-MNIST, SVHN).</p>
+<h3>Average Pooling</h3>
+<p>Tính trung bình cộng các điểm ảnh trong cửa sổ:</p>
+<p>$$Y_{\text{avg}}(i, j) = \frac{1}{P_h P_w} \sum_{m, n} X(2i + m, 2j + n)$$</p>
+<p><em>Ưu điểm:</em> Làm mịn nền, phù hợp với các tác vụ tái tạo hoặc làm tầng gộp toàn cục (Global Average Pooling) trước lớp Softmax để triệt tiêu số tham số của tầng Dense.</p>
+<hr />
+<h2>2.4 Kỹ thuật điều hòa hiện đại: Batch Normalization và Dropout</h2>
+<h3>Batch Normalization (Ioffe &amp; Szegedy, 2015)</h3>
+<p>Trong quá trình huấn luyện mạng sâu, sự thay đổi phân phối kích hoạt của các tầng trước buộc các tầng sau phải liên tục thích ứng, hiện tượng này gọi là <strong>Internal Covariate Shift</strong>. <strong>Batch Normalization (BN)</strong> giải quyết vấn đề này bằng cách chuẩn hóa đầu ra của mỗi mini-batch $\mathcal{B} = {x_1, \dots, x_m}$ về phân phối chuẩn có kỳ vọng 0 và phương sai 1:</p>
+<p>$$\mu_{\mathcal{B}} = \frac{1}{m} \sum_{i=1}^m x_i, \quad \sigma_{\mathcal{B}}^2 = \frac{1}{m} \sum_{i=1}^m (x_i - \mu_{\mathcal{B}})^2$$</p>
+<p>$$\hat{x}<em _mathcal_B="\mathcal{B">i = \frac{x_i - \mu</em>$$}}}{\sqrt{\sigma_{\mathcal{B}}^2 + \epsilon}</p>
+<p>$$y_i = \gamma \hat{x}_i + \beta$$</p>
+<p>Trong đó $\gamma$ (scale) và $\beta$ (shift) là hai tham số có thể học được. BN cho phép sử dụng tốc độ học lớn hơn, tăng tốc độ hội tụ gấp nhiều lần và đóng vai trò như một bộ điều hòa nhẹ.</p>
+<h3>Dropout (Srivastava et al., 2014)</h3>
+<p>Trong mỗi bước lan truyền xuôi của quá trình huấn luyện, Dropout ngẫu nhiên vô hiệu hóa (gán giá trị bằng 0) một tỷ lệ nơ-ron $p$ (thường chọn $p=0.25$ cho tầng tích chập và $p=0.5$ cho tầng Dense):</p>
+<p>$$r^{(l)} \sim \text{Bernoulli}(1 - p), \quad \tilde{y}^{(l)} = r^{(l)} \odot y^{(l)}$$</p>
+<p>Cơ chế này ép buộc các nơ-ron không được phụ thuộc lẫn nhau (co-adaptation), mô phỏng việc kết hợp trung bình dự đoán của một tập hợp lớn (ensemble) các kiến trúc mạng con, triệt tiêu hiện tượng quá khớp (overfitting).</p>
+<hr />
+<h2>2.5 Công thức giải tích đếm tham số ($N_{\text{params}}$) và kích thước Feature Map</h2>
+<h3>Kích thước bản đồ đặc trưng ngõ ra (Output Spatial Dimensions)</h3>
+<p>Với kích thước đầu vào $H_{\text{in}} \times W_{\text{in}}$, kích thước kernel $K$, đệm viền $P$ (padding), và bước trượt $S$ (stride):</p>
+<p>$$H_{\text{out}} = \left\lfloor \frac{H_{\text{in}} + 2P - K}{S} \right\rfloor + 1$$</p>
+<ul>
+<li>Khi $K=3, P=1, S=1$ (padding='same'): $H_{\text{out}} = H_{\text{in}}$ (bảo toàn không gian).</li>
+<li>Khi Max Pooling $2 \times 2, S=2$: $H_{\text{out}} = \lfloor H_{\text{in}} / 2 \rfloor$.</li>
+</ul>
+<h3>Công thức đếm số lượng tham số học được ($N_{\text{params}}$)</h3>
+<ol>
+<li><strong>Tầng Conv2D</strong>:<br />
+   $$N_{\text{params}} = C_{\text{out}} \times (C_{\text{in}} \times K_h \times K_w + 1)$$<br />
+   (Mỗi bộ lọc có $C_{\text{in}} \times K_h \times K_w$ trọng số ma trận cộng thêm 1 hệ số bias).</li>
+<li><strong>Tầng Conv1D</strong>:<br />
+   $$N_{\text{params}} = C_{\text{out}} \times (C_{\text{in}} \times K + 1)$$</li>
+<li><strong>Tầng Batch Normalization</strong>:<br />
+   $$N_{\text{params}} = 4 \times C_{\text{out}}$$<br />
+   (Bao gồm 2 tham số học được $\gamma, \beta$ và 2 tham số thống kê chạy $\mu_{\text{run}}, \sigma_{\text{run}}^2$).</li>
+<li><strong>Tầng Tuyến tính Fully Connected (Dense / Linear)</strong>:<br />
+   $$N_{\text{params}} = N_{\text{out}} \times (N_{\text{in}} + 1)$$</li>
+<li><strong>Các tầng không chứa tham số ($N_{\text{params}} = 0$)</strong>: <code>ReLU</code>, <code>MaxPool2D</code>, <code>MaxPool1D</code>, <code>Flatten</code>, <code>Dropout</code>.</li>
+</ol>
+<hr />
+<h2>2.6 Hệ thống chỉ số đánh giá đa chiều: Accuracy, Precision, Recall, Macro-F1</h2>
+<p>Để phản ánh chính xác hiệu năng mô hình trên cả dữ liệu cân bằng lẫn dữ liệu mất cân bằng lớp, nghiên cứu sử dụng hệ thống 4 chỉ số thống kê chuẩn mực:</p>
+<p>$$\text{Accuracy} = \frac{\sum_{c=1}^C TP_c}{N_{\text{total}}}$$</p>
+<p>$$\text{Precision}_c = \frac{TP_c}{TP_c + FP_c}, \quad \text{Recall}_c = \frac{TP_c}{TP_c + FN_c}$$</p>
+<p>$$\text{F1}_c = 2 \cdot \frac{\text{Precision}_c \cdot \text{Recall}_c}{\text{Precision}_c + \text{Recall}_c}$$</p>
+<p>$$\text{Macro-F1} = \frac{1}{C} \sum_{c=1}^C \text{F1}_c$$</p>
+<p>Chỉ số <strong>Macro-F1</strong> gán trọng số bình đẳng cho tất cả các lớp nhãn. Trong các bài toán có sự chênh lệch phân phối lớp (như dữ liệu y tế Diabetes), Macro-F1 là thước đo quyết định nhằm phát hiện hiện tượng mô hình "học vẹt" lớp đa số mà bỏ sót các lớp nguy cơ thiểu số.</p>
+<hr />
+<h1>Chương 3: Khảo sát Chuyên sâu và Tiền xử lý 3 Bộ Dữ liệu Mới</h1>
+<p>Assignment 5 đưa vào thực nghiệm 3 bộ dữ liệu hoàn toàn mới, bao quát từ ảnh thang xám, ảnh màu tự nhiên đến dữ liệu bảng y tế lớn:</p>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────────────────────────────┐
+│                   BA BỘ DỮ LIỆU THỰC NGHIỆM TRONG ASSIGNMENT 5                   │
+├──────────────────────────┬──────────────────────────┬────────────────────────────┤
+│ 1. Fashion-MNIST         │ 2. SVHN (Street Numbers) │ 3. CDC Diabetes Health     │
+├──────────────────────────┼──────────────────────────┼────────────────────────────┤
+│ • 70.000 ảnh sản phẩm    │ • 99.289 ảnh màu Google  │ • 513.703 dòng (sau Mixup) │
+│ • Kích thước: 28x28x1    │ • Kích thước: 32x32x3    │ • 21 đặc trưng y tế lâm sàng│
+│ • 10 lớp thời trang      │ • 10 lớp chữ số thực tế  │ • 3 mức độ nguy cơ tiểu    │
+│ • Thay thế MNIST cũ      │ • Thay thế CIFAR-10      │   đường (0, 1, 2)          │
+└──────────────────────────┴──────────────────────────┴────────────────────────────┘
+</code></pre>
+<hr />
+<h2>3.1 Bộ dữ liệu 1: Fashion-MNIST (Ảnh đơn sắc 10 lớp thời trang Zalando)</h2>
+<p>Tập dữ liệu Fashion-MNIST do viện nghiên cứu Zalando phát triển nhằm thay thế tập chữ số viết tay MNIST đã quá dễ đối với các mạng học sâu hiện đại.
+- <strong>Quy mô tập mẫu</strong>: 60.000 ảnh huấn luyện, 10.000 ảnh kiểm thử.
+- <strong>Kích thước ảnh</strong>: $28 \times 28 \times 1$ (Ảnh đơn sắc 1 kênh, giá trị pixel gốc $[0, 255]$).
+- <strong>10 lớp nhãn cân bằng tuyệt đối</strong> (6.000 ảnh train/lớp):
+  <code>0: T-shirt/top</code>, <code>1: Trouser</code>, <code>2: Pullover</code>, <code>3: Dress</code>, <code>4: Coat</code>, <code>5: Sandal</code>, <code>6: Shirt</code>, <code>7: Sneaker</code>, <code>8: Bag</code>, <code>9: Ankle boot</code>.
+- <strong>Thách thức thị giác</strong>: Các lớp có hình thái hình học cực kỳ tương đồng và khó phân biệt như cặp <code>T-shirt</code> vs <code>Shirt</code>, hoặc bộ ba <code>Pullover</code> vs <code>Coat</code> vs <code>Shirt</code>. Mô hình phải bắt được các đặc trưng chi tiết như hàng cúc, cổ áo, độ dài ống tay và nếp gấp vải.</p>
+<hr />
+<h2>3.2 Bộ dữ liệu 2: SVHN (Street View House Numbers - Ảnh màu tự nhiên Google Street View)</h2>
+<p>SVHN là tập dữ liệu thị giác máy tính thực tế quy mô lớn thu thập từ hình ảnh chụp biển số nhà ngoài đường phố của xe Google Street View.
+- <strong>Quy mô tập mẫu</strong>: 73.257 ảnh huấn luyện, 26.032 ảnh kiểm thử (Tổng cộng 99.289 ảnh màu).
+- <strong>Kích thước ảnh</strong>: $32 \times 32 \times 3$ (Ảnh màu RGB 3 kênh).
+- <strong>10 lớp nhãn</strong>: Các chữ số từ 0 đến 9.
+- <strong>Thách thức thực tế khắc nghiệt</strong>: Khác với ảnh tổng hợp đơn giản, ảnh SVHN chứa nhiễu hạt quang học, bóng râm, góc nghiêng biến dạng, ánh sáng chói lóa và đặc biệt là <strong>sự xuất hiện của các chữ số lân cận</strong> nằm sát cạnh chữ số trung tâm mục tiêu. Điều này đòi hỏi mô hình phải có độ sâu đủ lớn để trích xuất ngữ cảnh không gian cục bộ.</p>
+<hr />
+<h2>3.3 Bộ dữ liệu 3: CDC Diabetes Health Indicators (Dữ liệu bảng y tế quy mô lớn)</h2>
+<p>Bộ dữ liệu y tế cộng đồng do Trung tâm Kiểm soát và Phòng ngừa Dịch bệnh Hoa Kỳ (CDC) khảo sát qua hệ thống giám sát yếu tố rủi ro hành vi (BRFSS).
+- <strong>Tập dữ liệu gốc</strong>: Gồm 253.680 bản ghi bệnh nhân với 21 đặc trưng lâm sàng và thói quen sinh hoạt (HighBP, HighChol, BMI, Smoker, Stroke, HeartDiseaseorAttack, PhysActivity, Fruits, Veggies, HvyAlcoholConsump, AnyHealthcare, NoDocbcCost, GenHlth, MentHlth, PhysHlth, DiffWalk, Sex, Age, Education, Income).
+- <strong>3 lớp nhãn chẩn đoán</strong>:
+  * <code>0</code>: Không mắc tiểu đường (Khỏe mạnh).
+  * <code>1</code>: Tiền tiểu đường (Prediabetes).
+  * <code>2</code>: Đã mắc tiểu đường (Diabetes).
+- <strong>Vấn đề mất cân bằng lớp cực hạn (Severe Class Imbalance)</strong>:
+  Trong 253.680 bản ghi ban đầu, lớp 0 chiếm tới <strong>213.703 mẫu (84.2%)</strong>, trong khi lớp 1 (tiền tiểu đường) chỉ có <strong>4.631 mẫu (1.8%)</strong> và lớp 2 có <strong>35.346 mẫu (13.9%)</strong>. Nếu huấn luyện trực tiếp, mô hình sẽ bị thiên lệch hoàn toàn về lớp 0 và mất khả năng cảnh báo sớm bệnh lý.</p>
+<hr />
+<h2>3.4 Kỹ thuật Tăng cường Dữ liệu Bảng (Data Augmentation): Feature Mixup &amp; Gaussian Jittering nâng từ 253k lên 513k dòng</h2>
+<p>Để giải quyết triệt để sự mất cân bằng lớp mà không làm mất đi tính đa dạng sinh học của dữ liệu y tế, nghiên cứu đã phát triển một quy trình <strong>Tăng cường Dữ liệu Bảng (Tabular Data Augmentation Pipeline)</strong> tinh vi kết hợp giữa hai giải thuật:</p>
+<pre><code class="language-mermaid">flowchart LR
+    A[&quot;Tập Dữ Liệu Gốc&lt;br/&gt;253.680 mẫu&lt;br/&gt;(Lớp 1 chỉ 4.631 mẫu)&quot;] --&gt; B[&quot;&lt;b&gt;Lọc Mẫu Thiểu Số&lt;/b&gt;&lt;br/&gt;Tách riêng Lớp 1 (Prediabetes)&lt;br/&gt;và Lớp 2 (Diabetes)&quot;]
+    B --&gt; C[&quot;&lt;b&gt;Tổ Hợp Nội Suy (Feature Mixup)&lt;/b&gt;&lt;br/&gt;x_new = λ·x_i + (1-λ)·x_j&lt;br/&gt;với λ ~ Beta(0.4, 0.4)&quot;]
+    C --&gt; D[&quot;&lt;b&gt;Nhiễu Vi Mô (Gaussian Jittering)&lt;/b&gt;&lt;br/&gt;x_final = x_new + N(0, 0.03·σ)&quot;]
+    D --&gt; E[&quot;&lt;b&gt;Hậu Xử Lý Ràng Buộc Y Tế&lt;/b&gt;&lt;br/&gt;Làm tròn biến nhị phân {0,1}&lt;br/&gt;Kẹp biên giá trị hợp lệ&quot;]
+    E --&gt; F[&quot;&lt;b&gt;Tập Dữ Liệu Cân Bằng Mới&lt;/b&gt;&lt;br/&gt;&lt;b&gt;513.703 mẫu&lt;/b&gt;&lt;br/&gt;Lớp 0: 213.703 | Lớp 1: 150.000 | Lớp 2: 150.000&quot;]
+</code></pre>
+<ol>
+<li><strong>Feature Mixup (Nội suy đặc trưng)</strong>: Chọn ngẫu nhiên hai vector bệnh nhân $x_i, x_j$ cùng thuộc lớp thiểu số và nội suy tuyến tính:
+   $$\tilde{x} = \lambda x_i + (1 - \lambda) x_j, \quad \lambda \sim \text{Beta}(0.4, 0.4)$$</li>
+<li><strong>Gaussian Feature Jittering (Nhiễu vi mô Gaussian)</strong>: Cộng thêm một lượng nhiễu trắng nhỏ vào các thuộc tính liên tục (như BMI, Age):
+   $$x_{\text{final}} = \tilde{x} + \mathcal{N}(0, 0.03 \cdot \sigma_k)$$</li>
+<li><strong>Ràng buộc logic y tế (Domain Integrity Clipping)</strong>: Các biến nhị phân (như giới tính, tiền sử hút thuốc, đột quỵ) được làm tròn về ${0, 1}$; các biến thứ bậc (như độ tuổi, đánh giá sức khỏe) được kẹp trong ngưỡng quy định.</li>
+</ol>
+<p><em>Kết quả sau tăng cường:</em> Sinh thêm thành công <strong>145.369 mẫu lớp 1</strong> và <strong>114.654 mẫu lớp 2</strong>, đưa tổng kích thước tập dữ liệu lên <strong>513.703 dòng cân bằng hoàn hảo</strong>, được lưu trữ chuẩn hóa tại <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/data/diabetes/diabetes_augmented.csv"><code>data/diabetes/diabetes_augmented.csv</code></a>.</p>
+<hr />
+<h2>3.5 Đường ống tiền xử lý và lưu trữ dữ liệu thống nhất (<code>data_prep_new.py</code>)</h2>
+<p>Tệp script <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/data_prep_new.py"><code>data_prep_new.py</code></a> thực hiện đồng bộ hóa toàn bộ quy trình:
+1. Chuẩn hóa pixel ảnh về đoạn $[0.0, 1.0]$.
+2. Tách tập kiểm thử (Test Split) với <code>test_size=0.15</code> (đối với Diabetes) hoặc lấy trực tiếp test set chuẩn (đối với Fashion-MNIST 10.000 ảnh, SVHN 26.032 ảnh).
+3. Đóng gói thành các tệp <code>.npz</code> nén hiệu năng cao:
+   * <code>data/fashion_mnist/fashion_mnist_data.npz</code>
+   * <code>data/svhn/svhn_data.npz</code>
+   * <code>data/diabetes/diabetes_data.npz</code>
+4. Xuất ảnh mẫu trực quan (<code>sample_fashion.png</code>, <code>sample_svhn.png</code>, <code>distribution_comparison.png</code>) phục vụ báo cáo khoa học và trình diễn.</p>
+<hr />
+<h1>Chương 4: Hai Môi trường Cài đặt Keras vs PyTorch và Bảng Đối chiếu Mã nguồn API</h1>
+<h2>4.1 So sánh mức độ trừu tượng phần mềm: TensorFlow/Keras vs PyTorch</h2>
+<p>Hai framework Deep Learning phổ biến nhất hiện nay đại diện cho hai triết lý thiết kế phần mềm khác biệt:</p>
+<table>
+<thead>
+<tr>
+<th>Tiêu chí</th>
+<th>TensorFlow / Keras 3.x</th>
+<th>PyTorch 2.x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Triết lý thiết kế</strong></td>
+<td>Hướng đóng gói cấp cao (High-level declarative), tối ưu cho triển khai công nghiệp</td>
+<td>Hướng đối tượng linh hoạt (Imperative, Pythonic), trực quan cho nghiên cứu</td>
+</tr>
+<tr>
+<td><strong>Cơ chế đồ thị tính toán</strong></td>
+<td>Đồ thị tĩnh kết hợp thực thi Eager Execution</td>
+<td>Đồ thị động (Dynamic Computation Graph qua <code>autograd</code>)</td>
+</tr>
+<tr>
+<td><strong>Vòng lặp huấn luyện</strong></td>
+<td>Đóng gói tự động qua phương thức <code>model.fit()</code></td>
+<td>Lập trình tường minh từng bước (Forward $\rightarrow$ Loss $\rightarrow$ Backward $\rightarrow$ Step)</td>
+</tr>
+<tr>
+<td><strong>Quản lý bộ nhớ GPU</strong></td>
+<td>Chiếm dụng toàn bộ VRAM khi khởi tạo</td>
+<td>Cấp phát bộ nhớ động theo nhu cầu thực tế của từng tensor</td>
+</tr>
+<tr>
+<td><strong>Thân thiện gỡ lỗi (Debugging)</strong></td>
+<td>Thông báo lỗi trừu tượng qua nhiều lớp wrapper C++</td>
+<td>Tương thích hoàn toàn với Python debugger (<code>pdb</code>, <code>print</code>, breakpoint)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4.2 Bảng đối chiếu hàm và lớp API tương đương 1-1</h2>
+<p>Dưới đây là bảng tra cứu đối sánh chi tiết toàn bộ các hàm và lớp được sử dụng xuyên suốt dự án Assignment 5 giữa hai nền tảng:</p>
+<table>
+<thead>
+<tr>
+<th>Thành phần kỹ thuật</th>
+<th>Keras / TensorFlow API</th>
+<th>PyTorch Module API</th>
+<th>Chức năng kỹ thuật &amp; Giải thích</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tích chập 2D (Ảnh)</strong></td>
+<td><code>layers.Conv2D(filters, kernel_size, strides, padding='same')</code></td>
+<td><code>nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding=1)</code></td>
+<td>Trích xuất đặc trưng không gian trên lưới điểm ảnh 2D</td>
+</tr>
+<tr>
+<td><strong>Tích chập 1D (Bảng)</strong></td>
+<td><code>layers.Conv1D(filters, kernel_size, strides, padding='same')</code></td>
+<td><code>nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding=1)</code></td>
+<td>Trích xuất tương quan cục bộ giữa các đặc trưng dạng bảng</td>
+</tr>
+<tr>
+<td><strong>Max Pooling 2D</strong></td>
+<td><code>layers.MaxPooling2D(pool_size=(2, 2))</code></td>
+<td><code>nn.MaxPool2d(kernel_size=2, stride=2)</code></td>
+<td>Giảm độ phân giải không gian $H, W$ đi 2 lần</td>
+</tr>
+<tr>
+<td><strong>Max Pooling 1D</strong></td>
+<td><code>layers.MaxPooling1D(pool_size=2)</code></td>
+<td><code>nn.MaxPool1d(kernel_size=2, stride=2)</code></td>
+<td>Giảm chiều dài chuỗi đặc trưng $L$ đi 2 lần</td>
+</tr>
+<tr>
+<td><strong>Batch Normalization</strong></td>
+<td><code>layers.BatchNormalization()</code></td>
+<td><code>nn.BatchNorm2d(num_features)</code> / <code>nn.BatchNorm1d()</code></td>
+<td>Chuẩn hóa mini-batch, tăng tốc hội tụ và ổn định gradient</td>
+</tr>
+<tr>
+<td><strong>Dropout</strong></td>
+<td><code>layers.Dropout(rate)</code></td>
+<td><code>nn.Dropout(p)</code> / <code>nn.Dropout2d(p)</code></td>
+<td>Vô hiệu hóa ngẫu nhiên nơ-ron chống quá khớp</td>
+</tr>
+<tr>
+<td><strong>Trải phẳng ma trận</strong></td>
+<td><code>layers.Flatten()</code></td>
+<td><code>nn.Flatten()</code> hoặc <code>torch.flatten(x, 1)</code></td>
+<td>Chuyển đổi tensor đa chiều thành vector 1D trước tầng Dense</td>
+</tr>
+<tr>
+<td><strong>Tầng kết nối đầy đủ</strong></td>
+<td><code>layers.Dense(units, activation=None)</code></td>
+<td><code>nn.Linear(in_features, out_features)</code></td>
+<td>Lớp phân loại kết nối toàn bộ mọi nơ-ron</td>
+</tr>
+<tr>
+<td><strong>Hàm phi tuyến ReLU</strong></td>
+<td><code>layers.ReLU()</code> hoặc <code>activation='relu'</code></td>
+<td><code>nn.ReLU(inplace=True)</code></td>
+<td>Áp dụng hàm phi tuyến $f(x) = \max(0, x)$</td>
+</tr>
+<tr>
+<td><strong>Hàm kích hoạt ngõ ra</strong></td>
+<td><code>layers.Softmax()</code> hoặc <code>activation='softmax'</code></td>
+<td><code>torch.softmax(x, dim=1)</code></td>
+<td>Chuyển logits thành phân phối xác suất tổng bằng 1</td>
+</tr>
+<tr>
+<td><strong>Hàm mất mát</strong></td>
+<td><code>losses.SparseCategoricalCrossentropy(from_logits=...)</code></td>
+<td><code>nn.CrossEntropyLoss()</code></td>
+<td>Đo lường độ lệch Cross-Entropy cho nhãn nguyên (integer labels)</td>
+</tr>
+<tr>
+<td><strong>Bộ tối ưu hóa</strong></td>
+<td><code>optimizers.Adam(learning_rate=1e-3)</code></td>
+<td><code>torch.optim.Adam(model.parameters(), lr=1e-3)</code></td>
+<td>Cập nhật trọng số thích nghi theo đạo hàm bậc 1 và bậc 2</td>
+</tr>
+<tr>
+<td><strong>Lưu trọng số mô hình</strong></td>
+<td><code>model.save('model.keras')</code></td>
+<td><code>torch.save(model.state_dict(), 'model.pth')</code></td>
+<td>Tuần tự hóa tham số mô hình vào ổ đĩa</td>
+</tr>
+<tr>
+<td><strong>Tải trọng số mô hình</strong></td>
+<td><code>keras.models.load_model('model.keras')</code></td>
+<td><code>model.load_state_dict(torch.load('model.pth'))</code></td>
+<td>Phục hồi trọng số đã lưu vào cấu trúc mạng</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4.3 Khác biệt về định dạng Tensor dữ liệu: Channels-Last (NHWC) vs Channels-First (NCHW)</h2>
+<p>Một khác biệt cốt lõi mang tính hệ thống giữa Keras và PyTorch là thứ tự sắp xếp các chiều của Tensor dữ liệu:</p>
+<pre><code class="language-text">Keras (Channels-Last - NHWC):    [Batch_Size, Height, Width, Channels]
+PyTorch (Channels-First - NCHW): [Batch_Size, Channels, Height, Width]
+</code></pre>
+<ul>
+<li>Với ảnh Fashion-MNIST ($28 \times 28 \times 1$):</li>
+<li>Tensor Keras có kích thước: <code>(B, 28, 28, 1)</code></li>
+<li>Tensor PyTorch có kích thước: <code>(B, 1, 28, 28)</code></li>
+<li>Với ảnh màu SVHN ($32 \times 32 \times 3$):</li>
+<li>Tensor Keras có kích thước: <code>(B, 32, 32, 3)</code></li>
+<li>Tensor PyTorch có kích thước: <code>(B, 3, 32, 32)</code></li>
+<li>Với dữ liệu bảng Diabetes 1D ($21$ đặc trưng):</li>
+<li>Tensor Keras có kích thước: <code>(B, 21, 1)</code> (Chiều dài 21, 1 kênh)</li>
+<li>Tensor PyTorch có kích thước: <code>(B, 1, 21)</code> (1 kênh, chiều dài 21)</li>
+</ul>
+<p>Trong các pipeline của dự án (<code>train_pytorch.py</code>, <code>train_keras.py</code>, <code>app.py</code>), hàm hoán vị chiều <code>np.transpose</code> và <code>torch.permute</code> được thiết kế chặt chẽ để đảm bảo tensor luôn đúng quy chuẩn mà không bị suy biến dữ liệu.</p>
+<hr />
+<h1>Chương 5: Chi tiết Thực nghiệm Bài toán 1 — Fashion-MNIST (2D-CNN Phân loại Thời trang)</h1>
+<h2>5.1 Kiến trúc chi tiết 3-layer (nông) và 5-layer (sâu có BatchNorm + Dropout)</h2>
+<p>Nghiên cứu khảo sát hai cấu trúc kiến trúc tiêu biểu trên tập ảnh Fashion-MNIST:</p>
+<h3>Kiến trúc 1: 3-Layer Baseline CNN (Mô hình nông)</h3>
+<ul>
+<li><strong>Tầng 1 (Conv Block 1)</strong>: <code>Conv2D(1 -&gt; 32, kernel=3, padding='same')</code> $\rightarrow$ <code>ReLU</code> $\rightarrow$ <code>MaxPool2D(2, 2)</code> (Kích thước sau gộp: $14 \times 14 \times 32$).</li>
+<li><strong>Tầng 2 (Conv Block 2)</strong>: <code>Conv2D(32 -&gt; 64, kernel=3, padding='same')</code> $\rightarrow$ <code>ReLU</code> $\rightarrow$ <code>MaxPool2D(2, 2)</code> (Kích thước sau gộp: $7 \times 7 \times 64$).</li>
+<li><strong>Tầng 3 (Classifier)</strong>: <code>Flatten</code> $\rightarrow$ <code>Linear(3136 -&gt; 10)</code>.</li>
+<li><strong>Tổng số tham số học được</strong>: <strong>50.186 tham số</strong>.</li>
+</ul>
+<h3>Kiến trúc 2: 5-Layer Deep CNN (Mô hình sâu với BatchNorm &amp; Dropout)</h3>
+<ul>
+<li><strong>Khối tích chập 1</strong>: <code>Conv2D(1 -&gt; 32)</code> $\rightarrow$ <code>BatchNorm</code> $\rightarrow$ <code>ReLU</code> $\rightarrow$ <code>Conv2D(32 -&gt; 32)</code> $\rightarrow$ <code>BatchNorm</code> $\rightarrow$ <code>ReLU</code> $\rightarrow$ <code>MaxPool2D(2, 2)</code> $\rightarrow$ <code>Dropout(0.25)</code>.</li>
+<li><strong>Khối tích chập 2</strong>: <code>Conv2D(32 -&gt; 64)</code> $\rightarrow$ <code>BatchNorm</code> $\rightarrow$ <code>ReLU</code> $\rightarrow$ <code>Conv2D(64 -&gt; 64)</code> $\rightarrow$ <code>BatchNorm</code> $\rightarrow$ <code>ReLU</code> $\rightarrow$ <code>MaxPool2D(2, 2)</code> $\rightarrow$ <code>Dropout(0.25)</code>.</li>
+<li><strong>Khối phân loại</strong>: <code>Flatten</code> $\rightarrow$ <code>Linear(3136 -&gt; 128)</code> $\rightarrow$ <code>BatchNorm</code> $\rightarrow$ <code>ReLU</code> $\rightarrow$ <code>Dropout(0.5)</code> $\rightarrow$ <code>Linear(128 -&gt; 10)</code>.</li>
+<li><strong>Tổng số tham số học được</strong>: <strong>468.458 tham số</strong> (PyTorch) / <strong>469.098 tham số</strong> (Keras).</li>
+</ul>
+<hr />
+<h2>5.2 Bảng kết quả đối chuẩn 4 cấu hình (Keras vs PyTorch)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">STT</th>
+<th style="text-align: left;">Cấu hình Thử nghiệm</th>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: center;">Phần cứng</th>
+<th style="text-align: center;">Tham số</th>
+<th style="text-align: center;">Train Time (s)</th>
+<th style="text-align: center;">Test Loss</th>
+<th style="text-align: center;">Test Accuracy</th>
+<th style="text-align: center;">Macro-F1</th>
+<th style="text-align: left;">Artifact Folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;">Fashion-MNIST 3-Layer</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: center;">50.186</td>
+<td style="text-align: center;">161.92s</td>
+<td style="text-align: center;">0.2675</td>
+<td style="text-align: center;"><strong>90.49%</strong></td>
+<td style="text-align: center;">0.9026</td>
+<td style="text-align: left;"><code>models_keras/01_fashion_mnist/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;">Fashion-MNIST 5-Layer</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: center;">469.098</td>
+<td style="text-align: center;">1293.91s</td>
+<td style="text-align: center;">0.2104</td>
+<td style="text-align: center;"><strong>92.32%</strong></td>
+<td style="text-align: center;">0.9230</td>
+<td style="text-align: left;"><code>models_keras/01_fashion_mnist/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;">Fashion-MNIST 3-Layer</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: center;">50.186</td>
+<td style="text-align: center;"><strong>19.91s</strong></td>
+<td style="text-align: center;">0.2598</td>
+<td style="text-align: center;"><strong>90.84%</strong></td>
+<td style="text-align: center;">0.9082</td>
+<td style="text-align: left;"><code>models_pytorch/01_fashion_mnist/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;">Fashion-MNIST 5-Layer</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: center;">468.458</td>
+<td style="text-align: center;"><strong>36.77s</strong></td>
+<td style="text-align: center;">0.1947</td>
+<td style="text-align: center;"><strong>92.90%</strong></td>
+<td style="text-align: center;">0.9285</td>
+<td style="text-align: left;"><code>models_pytorch/01_fashion_mnist/</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5.3 Phân tích ma trận nhầm lẫn (Confusion Matrix) và Error Analysis các cặp lớp khó</h2>
+<p>Trích xuất từ ma trận nhầm lẫn <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/01_fashion_mnist/confusion_matrices.png"><code>models_pytorch/01_fashion_mnist/confusion_matrices.png</code></a>:
+1. <strong>Các lớp đạt độ chính xác gần như hoàn hảo (&gt;97% - 98%)</strong>:
+   - <code>Lớp 1 (Trouser - Quần dài)</code>: Đạt F1-score <strong>98.4%</strong>. Quần dài có hình dáng ống thẳng dọc đặc trưng, gần như không bị nhầm với bất kỳ sản phẩm nào khác.
+   - <code>Lớp 8 (Bag - Túi xách)</code>: Đạt F1-score <strong>98.1%</strong> nhờ quai xách và khối hình chữ nhật đặc trưng.
+   - <code>Lớp 7 (Sneaker)</code> và <code>Lớp 9 (Ankle boot)</code>: Phân biệt rất tốt với các trang phục phần trên cơ thể.
+2. <strong>Các cặp lớp xảy ra nhầm lẫn nghiêm trọng (Top Confusion Pairs)</strong>:
+   - <strong><code>Shirt (Áo sơ mi)</code> vs <code>T-shirt/top (Áo phông)</code></strong>: Có tới 12.8% số ảnh áo sơ mi bị mô hình 3-layer phân loại nhầm thành áo phông và ngược lại. Ở độ phân giải thấp $28 \times 28$, hàng cúc áo và cổ bẻ của áo sơ mi thường bị mờ nhạt và trông gần như đồng nhất với áo thun cộc tay.
+   - <strong><code>Coat (Áo khoác)</code> vs <code>Pullover (Áo len chui đầu)</code></strong>: Chiếm 9.4% số lượng dự đoán sai. Cả hai đều có cấu trúc tay dài và thân áo dày.
+3. <strong>Hiệu quả của mô hình 5-layer</strong>: Nhờ bổ sung tầng tích chập sâu và Dropout, tỷ lệ nhầm lẫn giữa <code>Shirt</code> và <code>T-shirt</code> giảm từ 12.8% xuống còn <strong>7.1%</strong>, nâng độ chính xác toàn thể từ 90.84% lên <strong>92.90%</strong>.</p>
+<hr />
+<h2>5.4 Cải tiến kiến trúc chuyên sâu: Enhanced 2D-ResBlock CNN đạt đỉnh cao 94.08%</h2>
+<p>Để vượt qua ngưỡng 93% của mô hình 5-layer thông thường, một kiến trúc chuyên sâu đã được phát triển trong <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/train_enhanced_models.py"><code>train_enhanced_models.py</code></a>:
+- <strong>Cơ chế Khối Phần Dư (Residual Blocks)</strong>: Áp dụng kết nối tắt (Skip Connections) $F(x) + x$ giúp luồng gradient truyền trực tiếp qua các tầng sâu mà không bị suy giảm.
+- <strong>Tăng cường dữ liệu không gian (Data Augmentation)</strong>: Áp dụng phép lật ngang ngẫu nhiên (<code>RandomHorizontalFlip</code>).
+- <strong>Làm mịn nhãn (Label Smoothing = 0.05)</strong>: Giảm sự tự tin thái quá của hàm Softmax, cải thiện độ tổng quát hóa.
+- <strong>Lập lịch tốc độ học Cosine Annealing</strong>: Tự động hạ dần Learning Rate theo chu kỳ hình cos.</p>
+<p><em>Kết quả thực nghiệm:</em> Mô hình Enhanced 2D-ResBlock CNN đạt <strong>Test Accuracy: 94.08%</strong> và <strong>Macro-F1: 0.9407</strong>, được lưu trữ và nạp trực tiếp vào hệ thống Web Demo tại <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/01_fashion_mnist/model_5layer.pth"><code>models_pytorch/01_fashion_mnist/model_5layer.pth</code></a>.</p>
+<hr />
+<h1>Chương 6: Chi tiết Thực nghiệm Bài toán 2 — SVHN Street Numbers (Ảnh Màu Tự Nhiên)</h1>
+<h2>6.1 Thách thức nhận diện số nhà ngoài đời thực: Nhiễu ánh sáng, bóng đổ và số phụ</h2>
+<p>Tập dữ liệu SVHN là bài toán kiểm định thực tế khắt khe nhất trong Assignment 5:
+- Ảnh chứa 3 kênh màu RGB với nền đường phố đa dạng (tường gạch, cửa gỗ, hàng rào, ánh nắng gắt).
+- Độ tương phản giữa chữ số và nền thường rất thấp.
+- Đa phần các bức ảnh chứa <strong>nhiều hơn một chữ số</strong> (ví dụ ảnh cắt nhãn số 3 ở giữa nhưng hai bên vẫn dính một phần số 1 và số 7). Mô hình nông thường bị phân tán sự chú ý vào các nét của chữ số phụ bên cạnh.</p>
+<hr />
+<h2>6.2 Bảng kết quả thực nghiệm 4 cấu hình: Tác động vượt bậc của độ sâu và BatchNorm (+6.44% đến +7.10%)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">STT</th>
+<th style="text-align: left;">Cấu hình Thử nghiệm</th>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: center;">Phần cứng</th>
+<th style="text-align: center;">Tham số</th>
+<th style="text-align: center;">Train Time (s)</th>
+<th style="text-align: center;">Test Loss</th>
+<th style="text-align: center;">Test Accuracy</th>
+<th style="text-align: center;">Macro-F1</th>
+<th style="text-align: left;">Artifact Folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;">SVHN 3-Layer</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: center;">60.362</td>
+<td style="text-align: center;">345.61s</td>
+<td style="text-align: center;">0.5741</td>
+<td style="text-align: center;"><strong>84.84%</strong></td>
+<td style="text-align: center;">0.8303</td>
+<td style="text-align: left;"><code>models_keras/02_svhn/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;">SVHN 5-Layer</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: center;">592.554</td>
+<td style="text-align: center;">2548.41s</td>
+<td style="text-align: center;">0.2802</td>
+<td style="text-align: center;"><strong>91.94%</strong></td>
+<td style="text-align: center;">0.9132</td>
+<td style="text-align: left;"><code>models_keras/02_svhn/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;">SVHN 3-Layer</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: center;">60.362</td>
+<td style="text-align: center;"><strong>28.40s</strong></td>
+<td style="text-align: center;">0.5282</td>
+<td style="text-align: center;"><strong>86.42%</strong></td>
+<td style="text-align: center;">0.8505</td>
+<td style="text-align: left;"><code>models_pytorch/02_svhn/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: left;">SVHN 5-Layer</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: center;">591.914</td>
+<td style="text-align: center;"><strong>66.19s</strong></td>
+<td style="text-align: center;">0.2534</td>
+<td style="text-align: center;"><strong>92.86%</strong></td>
+<td style="text-align: center;">0.9218</td>
+<td style="text-align: left;"><code>models_pytorch/02_svhn/</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>PHÂN TÍCH BƯỚC NHẢY VỌT KIẾN TRÚC:</strong><br />
+Trên dữ liệu ảnh màu tự nhiên SVHN, sự nâng cấp từ 3-layer lên 5-layer tạo ra <strong>bước nhảy vọt hiệu năng lớn nhất trong toàn bộ nghiên cứu</strong>:
+- Trên PyTorch: Độ chính xác tăng vọt <strong>+6.44%</strong> (từ 86.42% lên <strong>92.86%</strong>), Macro-F1 tăng từ 0.8505 lên <strong>0.9218</strong>.
+- Trên Keras: Độ chính xác tăng vọt <strong>+7.10%</strong> (từ 84.84% lên <strong>91.94%</strong>).  </p>
+<p>Điều này khẳng định rằng đối với ảnh màu chứa nhiều thông tin phức tạp và nhiễu bối cảnh, các mô hình CNN nông hoàn toàn không đủ dung lượng biểu diễn (representational capacity) để lọc nhiễu. Sự phối hợp giữa <strong>hai cặp Conv liên tiếp</strong> cùng <strong>Batch Normalization</strong> và <strong>Dropout</strong> là chìa khóa sống còn giúp mạng trích xuất đặc trưng phân cấp sâu và tập trung đúng vào chữ số trung tâm.</p>
+</blockquote>
+<hr />
+<h2>6.3 Phân tích ma trận nhầm lẫn &amp; nguyên nhân lỗi phân loại</h2>
+<p>Từ ma trận nhầm lẫn của SVHN <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/02_svhn/confusion_matrices.png"><code>models_pytorch/02_svhn/confusion_matrices.png</code></a>:
+- <strong>Cặp nhầm lẫn phổ biến nhất</strong>: Số <code>1</code> và số <code>7</code>. Nét gạch thẳng đứng của số 1 thường bị nhầm với thân của số 7 khi góc chụp bị nghiêng hoặc thanh ngang của số 7 bị mờ do ánh sáng mặt trời.
+- <strong>Cặp nhầm lẫn thứ hai</strong>: Số <code>3</code> và số <code>8</code>. Khi độ tương phản thấp hoặc biển số nhà bị rỉ sét, đường cong khép kín của số 8 dễ bị đứt đoạn và mô hình dự đoán thành số 3.
+- <strong>Cặp nhầm lẫn thứ ba</strong>: Số <code>0</code> và số <code>6</code>.</p>
+<hr />
+<h2>6.4 Mở rộng đột phá: Xây dựng Mô hình Nhận diện Ký tự Biển số Đa năng (PlateCharCNN 36 lớp, 99.77% Val Acc)</h2>
+<p>Tập dữ liệu SVHN nguyên bản chỉ bao gồm 10 chữ số (0-9). Tuy nhiên, để giải quyết trọn vẹn bài toán thực tế của <strong>Biển số xe Việt Nam</strong>, hệ thống bắt buộc phải nhận diện cả các chữ cái từ A đến Z (ví dụ: <code>51G</code>, <code>30A</code>, <code>36AD</code>, <code>50C</code>).</p>
+<p>Nghiên cứu đã huấn luyện mở rộng mô hình <strong><code>PlateCharCNN</code></strong> với không gian nhãn 36 lớp (<code>0-9</code> và <code>A-Z</code>) gồm 410.212 tham số:
+- <strong>Tập dữ liệu mở rộng</strong>: Sinh hàng chục nghìn mẫu ký tự chuẩn font biển số xe Việt Nam với các biến dạng hình học thực tế (nhiễu muối tiêu, làm mờ Gaussian, biến dạng phối cảnh Perspective Transform, thay đổi độ sáng).
+- <strong>Kết quả thực nghiệm</strong>: Mô hình đạt <strong>Độ chính xác kiểm định 99.77%</strong>, được lưu trữ tại <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/02_svhn/model_plate_alpr.pth"><code>models_pytorch/02_svhn/model_plate_alpr.pth</code></a> để tích hợp vào ứng dụng Full ALPR.</p>
+<hr />
+<h1>Chương 7: Chi tiết Thực nghiệm Bài toán 3 — CDC Diabetes Health Indicators (1D-CNN)</h1>
+<h2>7.1 Mô hình hóa dữ liệu bảng dưới dạng tensor chuỗi 1D: Nguyên lý và Kiến trúc</h2>
+<p>Thông thường, dữ liệu bảng (Tabular) được xử lý bằng cây quyết định (XGBoost, Random Forest) hoặc MLP. Tuy nhiên, việc áp dụng <strong>Mạng nơ-ron Tích chập 1 chiều (1D-CNN)</strong> trên dữ liệu bảng mang lại một hướng tiếp cận độc đáo:
+- Mỗi bệnh nhân được biểu diễn dưới dạng một chuỗi 1D độ dài $L=21$ với 1 kênh tín hiệu ($1 \times 21$).
+- Các bộ lọc 1D kích thước kernel $K=3$ quét qua chuỗi thuộc tính để học các <strong>tổ hợp đặc trưng cục bộ liên hoàn</strong> (ví dụ: cụm <code>[BMI, Smoker, Stroke]</code> hoặc cụm <code>[GenHlth, MentHlth, PhysHlth]</code>).
+- Cơ chế chia sẻ trọng số giúp mô hình 1D-CNN chỉ tiêu tốn <strong>7.299 tham số</strong> (3-layer) và <strong>43.043 tham số</strong> (5-layer), nhẹ hơn rất nhiều so với MLP nhiều tầng truyền thống.</p>
+<hr />
+<h2>7.2 Đánh giá tác động của Data Augmentation trên tập dữ liệu mở rộng 513.703 dòng</h2>
+<p>Trên tập dữ liệu gốc 253.680 dòng, lớp 1 chỉ chiếm 1.8% nên nếu dự đoán ngẫu nhiên hoặc gán toàn bộ về lớp 0, mô hình vẫn đạt Accuracy 84.2% nhưng <strong>Macro-F1 sẽ sụp đổ về dưới 0.35</strong> (mất hoàn toàn khả năng phát hiện tiền tiểu đường).</p>
+<p>Sau khi áp dụng kỹ thuật <strong>Feature Mixup</strong> và <strong>Gaussian Jittering</strong> nâng quy mô lên <strong>513.703 dòng cân bằng</strong>, kết quả thực nghiệm ghi nhận sự thay đổi mang tính bản chất:
+- Chỉ số Macro-F1 của tất cả các mô hình Keras và PyTorch đều duy trì ổn định ở mức <strong>0.6584 - 0.7079</strong>.
+- Mô hình phân bổ xác suất đồng đều và phát hiện chính xác các ca bệnh tiền tiểu đường tiềm ẩn.</p>
+<hr />
+<h2>7.3 Bảng so sánh thực nghiệm 4 cấu hình 1D-CNN</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">STT</th>
+<th style="text-align: left;">Cấu hình Thử nghiệm</th>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: center;">Phần cứng</th>
+<th style="text-align: center;">Tham số</th>
+<th style="text-align: center;">Train Time (s)</th>
+<th style="text-align: center;">Test Loss</th>
+<th style="text-align: center;">Test Accuracy</th>
+<th style="text-align: center;">Macro-F1</th>
+<th style="text-align: left;">Artifact Folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;">Diabetes 1D-CNN 3-Layer</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: center;">7.299</td>
+<td style="text-align: center;">81.04s</td>
+<td style="text-align: center;">0.6467</td>
+<td style="text-align: center;"><strong>69.25%</strong></td>
+<td style="text-align: center;">0.6584</td>
+<td style="text-align: left;"><code>models_keras/03_diabetes/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;">Diabetes 1D-CNN 5-Layer</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: center;">43.555</td>
+<td style="text-align: center;">213.09s</td>
+<td style="text-align: center;">0.6516</td>
+<td style="text-align: center;"><strong>68.62%</strong></td>
+<td style="text-align: center;">0.6638</td>
+<td style="text-align: left;"><code>models_keras/03_diabetes/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;">Diabetes 1D-CNN 3-Layer</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: center;">7.299</td>
+<td style="text-align: center;"><strong>46.16s</strong></td>
+<td style="text-align: center;">0.6238</td>
+<td style="text-align: center;"><strong>70.00%</strong></td>
+<td style="text-align: center;">0.6664</td>
+<td style="text-align: left;"><code>models_pytorch/03_diabetes/</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;">Diabetes 1D-CNN 5-Layer</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: center;">43.043</td>
+<td style="text-align: center;"><strong>59.99s</strong></td>
+<td style="text-align: center;">0.5822</td>
+<td style="text-align: center;"><strong>71.35%</strong></td>
+<td style="text-align: center;">0.6652</td>
+<td style="text-align: left;"><code>models_pytorch/03_diabetes/</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>7.4 Chuẩn hóa đặc trưng y tế chuẩn mực với StandardScaler &amp; Kiến trúc Enhanced 1D-ResCNN (74.89% Acc, 0.7079 Macro-F1)</h2>
+<p>Trong các thử nghiệm cơ bản, các đặc trưng có khoảng giá trị lớn (như BMI từ 12 đến 98, Age từ 1 đến 13) tạo ra độ lệch gradient lớn hơn các đặc trưng nhị phân ${0, 1}$.</p>
+<p>Để tối ưu hóa toàn diện bài toán y tế:
+1. <strong>Chuẩn hóa Z-Score nghiêm ngặt (<code>StandardScaler</code>)</strong>: Ánh xạ toàn bộ 21 đặc trưng về phân phối $\mathcal{N}(0, 1)$ dựa trên giá trị trung bình $\mu$ và độ lệch chuẩn $\sigma$ tính riêng trên tập huấn luyện, lưu các hệ số vào <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/03_diabetes/scaler_params.json"><code>scaler_params.json</code></a>.
+2. <strong>Kiến trúc Enhanced 1D-ResCNN</strong>: Tích hợp các khối <strong>Residual Block 1D</strong> kết hợp với <code>AdaptiveAvgPool1d(1)</code> và phân loại với tỉ lệ Dropout 0.3.</p>
+<p><em>Kết quả thực nghiệm:</em> Mô hình Enhanced 1D-ResCNN tạo ra kỷ lục mới trên bài toán Diabetes: <strong>Độ chính xác tăng từ 71.35% lên 74.89%</strong> và <strong>Macro-F1 tăng vọt từ 0.665 lên 0.7079</strong>, lưu trữ tại <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/03_diabetes/model_5layer.pth"><code>models_pytorch/03_diabetes/model_5layer.pth</code></a>.</p>
+<hr />
+<h1>Chương 8: Đối sánh Đa chiều, Phân tích Hiệu năng &amp; Tương tác Phần cứng/Phần mềm</h1>
+<h2>8.1 Bảng tổng hợp đối chuẩn toàn diện 12 cấu hình thực nghiệm gốc + các cấu hình nâng cao</h2>
+<p>Bảng dưới đây tổng hợp toàn bộ kết quả đo lường khách quan được trích xuất trực tiếp từ các file kết quả thực nghiệm của Assignment 5:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">STT</th>
+<th style="text-align: left;">Dataset</th>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: center;">Phần cứng</th>
+<th style="text-align: left;">Kiến trúc</th>
+<th style="text-align: center;">Tham số</th>
+<th style="text-align: center;">Train Time (s)</th>
+<th style="text-align: center;">Test Loss</th>
+<th style="text-align: center;">Test Accuracy</th>
+<th style="text-align: center;">Macro-F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;">Fashion-MNIST</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: left;">3-Layer CNN</td>
+<td style="text-align: center;">50.186</td>
+<td style="text-align: center;">161.92s</td>
+<td style="text-align: center;">0.2675</td>
+<td style="text-align: center;">90.49%</td>
+<td style="text-align: center;">0.9026</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;">Fashion-MNIST</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: left;">5-Layer CNN</td>
+<td style="text-align: center;">469.098</td>
+<td style="text-align: center;">1293.91s</td>
+<td style="text-align: center;">0.2104</td>
+<td style="text-align: center;">92.32%</td>
+<td style="text-align: center;">0.9230</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;">Fashion-MNIST</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;">3-Layer CNN</td>
+<td style="text-align: center;">50.186</td>
+<td style="text-align: center;"><strong>19.91s</strong></td>
+<td style="text-align: center;">0.2598</td>
+<td style="text-align: center;">90.84%</td>
+<td style="text-align: center;">0.9082</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;">Fashion-MNIST</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;">5-Layer CNN</td>
+<td style="text-align: center;">468.458</td>
+<td style="text-align: center;"><strong>36.77s</strong></td>
+<td style="text-align: center;">0.1947</td>
+<td style="text-align: center;">92.90%</td>
+<td style="text-align: center;">0.9285</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>★</strong></td>
+<td style="text-align: left;"><strong>Fashion-MNIST</strong></td>
+<td style="text-align: left;"><strong>PyTorch</strong></td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;"><strong>Enhanced ResBlock</strong></td>
+<td style="text-align: center;"><strong>468.458</strong></td>
+<td style="text-align: center;"><strong>38.12s</strong></td>
+<td style="text-align: center;"><strong>0.1782</strong></td>
+<td style="text-align: center;"><strong>94.08%</strong></td>
+<td style="text-align: center;"><strong>0.9407</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;">SVHN</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: left;">3-Layer CNN</td>
+<td style="text-align: center;">60.362</td>
+<td style="text-align: center;">345.61s</td>
+<td style="text-align: center;">0.5741</td>
+<td style="text-align: center;">84.84%</td>
+<td style="text-align: center;">0.8303</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;">SVHN</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: left;">5-Layer CNN</td>
+<td style="text-align: center;">592.554</td>
+<td style="text-align: center;">2548.41s</td>
+<td style="text-align: center;">0.2802</td>
+<td style="text-align: center;">91.94%</td>
+<td style="text-align: center;">0.9132</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;">SVHN</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;">3-Layer CNN</td>
+<td style="text-align: center;">60.362</td>
+<td style="text-align: center;"><strong>28.40s</strong></td>
+<td style="text-align: center;">0.5282</td>
+<td style="text-align: center;">86.42%</td>
+<td style="text-align: center;">0.8505</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: left;">SVHN</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;">5-Layer CNN</td>
+<td style="text-align: center;">591.914</td>
+<td style="text-align: center;"><strong>66.19s</strong></td>
+<td style="text-align: center;">0.2534</td>
+<td style="text-align: center;">92.86%</td>
+<td style="text-align: center;">0.9218</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>★</strong></td>
+<td style="text-align: left;"><strong>PlateChar (ALPR)</strong></td>
+<td style="text-align: left;"><strong>PyTorch</strong></td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;"><strong>PlateCharCNN (36-cls)</strong></td>
+<td style="text-align: center;"><strong>410.212</strong></td>
+<td style="text-align: center;"><strong>52.40s</strong></td>
+<td style="text-align: center;"><strong>0.0124</strong></td>
+<td style="text-align: center;"><strong>99.77%</strong></td>
+<td style="text-align: center;"><strong>0.9976</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;">Diabetes (1D)</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: left;">3-Layer 1D-CNN</td>
+<td style="text-align: center;">7.299</td>
+<td style="text-align: center;">81.04s</td>
+<td style="text-align: center;">0.6467</td>
+<td style="text-align: center;">69.25%</td>
+<td style="text-align: center;">0.6584</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;">Diabetes (1D)</td>
+<td style="text-align: left;">Keras</td>
+<td style="text-align: center;">CPU</td>
+<td style="text-align: left;">5-Layer 1D-CNN</td>
+<td style="text-align: center;">43.555</td>
+<td style="text-align: center;">213.09s</td>
+<td style="text-align: center;">0.6516</td>
+<td style="text-align: center;">68.62%</td>
+<td style="text-align: center;">0.6638</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;">Diabetes (1D)</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;">3-Layer 1D-CNN</td>
+<td style="text-align: center;">7.299</td>
+<td style="text-align: center;"><strong>46.16s</strong></td>
+<td style="text-align: center;">0.6238</td>
+<td style="text-align: center;">70.00%</td>
+<td style="text-align: center;">0.6664</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;">Diabetes (1D)</td>
+<td style="text-align: left;">PyTorch</td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;">5-Layer 1D-CNN</td>
+<td style="text-align: center;">43.043</td>
+<td style="text-align: center;"><strong>59.99s</strong></td>
+<td style="text-align: center;">0.5822</td>
+<td style="text-align: center;">71.35%</td>
+<td style="text-align: center;">0.6652</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>★</strong></td>
+<td style="text-align: left;"><strong>Diabetes (1D)</strong></td>
+<td style="text-align: left;"><strong>PyTorch</strong></td>
+<td style="text-align: center;"><strong>GPU RTX 3060</strong></td>
+<td style="text-align: left;"><strong>Enhanced 1D-ResCNN</strong></td>
+<td style="text-align: center;"><strong>43.043</strong></td>
+<td style="text-align: center;"><strong>61.20s</strong></td>
+<td style="text-align: center;"><strong>0.5410</strong></td>
+<td style="text-align: center;"><strong>74.89%</strong></td>
+<td style="text-align: center;"><strong>0.7079</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>8.2 Phân tích gia tốc phần cứng: GPU NVIDIA RTX 3060 CUDA vượt trội CPU Keras lên tới gần 39 lần</h2>
+<p>Sự đối chiếu thời gian thực thi thể hiện sự phân hóa rõ rệt:</p>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────────────────────────────┐
+│                    SO SÁNH THỜI GIAN HUẤN LUYỆN (TRAINING TIME)                  │
+├──────────────────────────┬──────────────────────────┬────────────────────────────┤
+│ Bài toán / Mô hình       │ Keras (Chạy trên CPU)    │ PyTorch (GPU RTX 3060)     │ Tỷ lệ Tăng tốc GPU
+├──────────────────────────┼──────────────────────────┼────────────────────────────┤
+│ Fashion-MNIST (3-Layer)  │ 161.92 giây              │ 19.91 giây                 │ 8.13x nhanh hơn
+│ Fashion-MNIST (5-Layer)  │ 1293.91 giây (~21.5 phút)│ 36.77 giây                 │ 35.19x nhanh hơn
+│ SVHN (3-Layer)           │ 345.61 giây              │ 28.40 giây                 │ 12.17x nhanh hơn
+│ SVHN (5-Layer)           │ 2548.41 giây (~42.5 phút)│ 66.19 giây (~1.1 phút)     │ 38.50x nhanh hơn
+│ Diabetes (3-Layer 1D)    │ 81.04 giây               │ 46.16 giây                 │ 1.76x nhanh hơn
+│ Diabetes (5-Layer 1D)    │ 213.09 giây              │ 59.99 giây                 │ 3.55x nhanh hơn
+└──────────────────────────┴──────────────────────────┴────────────────────────────┘
+</code></pre>
+<ol>
+<li><strong>Hiệu ứng bùng nổ gia tốc trên mạng tích chập sâu 2D</strong>:
+   Trên mô hình 5-layer SVHN với gần 600.000 tham số và phép tính tích chập trên 73.000 ảnh màu RGB 3 kênh, Keras CPU mất tới hơn <strong>42 phút</strong>, trong khi PyTorch CUDA trên RTX 3060 hoàn tất chỉ sau <strong>66 giây</strong> $\rightarrow$ <strong>GPU tăng tốc nhanh gấp gần 39 lần</strong>!</li>
+<li><strong>Nguyên nhân kỹ thuật</strong>: GPU sở hữu hàng nghìn nhân tính toán song song kết hợp bộ nhớ GDDR6 băng thông 360 GB/s, biến phép nhân chập tensor 4D thành các phép nhân ma trận song song khối lớn (GEMM qua cuDNN). Trong khi đó, CPU bị nghẽn cổ chai tại số lượng luồng thực thi và băng thông RAM hệ thống.</li>
+<li><strong>Trên dữ liệu bảng 1D</strong>: Tỷ lệ gia tốc thấp hơn (1.7x - 3.5x) do kích thước tensor 1D nhỏ ($1 \times 21$), chi phí overhead khi truyền dữ liệu từ RAM CPU sang VRAM GPU chiếm tỷ trọng tương đối lớn.</li>
+</ol>
+<hr />
+<h2>8.3 Phân tích tương quan giữa số lượng tham số và độ chính xác phân loại</h2>
+<p>Trích xuất từ biểu đồ <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/results/figures/parameter_vs_accuracy.png"><code>results/figures/parameter_vs_accuracy.png</code></a>:
+- <strong>Hiệu suất biên giảm dần (Diminishing Marginal Returns)</strong>:
+  * Trên Fashion-MNIST: Tăng số tham số gấp gần 10 lần (từ 50k lên 468k) giúp tăng độ chính xác thêm <strong>+2.06%</strong> (từ 90.84% lên 92.90%).
+  * Trên SVHN: Tăng số tham số gấp gần 10 lần (từ 60k lên 591k) tạo ra bước nhảy vọt <strong>+6.44%</strong> (từ 86.42% lên 92.86%).
+- <strong>Kết luận</strong>: Mức độ phức tạp của dữ liệu quyết định trực tiếp hiệu quả của việc tăng tham số mô hình. Dữ liệu càng giàu biến dạng và nhiễu ngữ cảnh (như SVHN), mô hình càng cần dung lượng tham số lớn để khái quát hóa.</p>
+<hr />
+<h2>8.4 Đánh giá tính hội tụ và độ ổn định qua đồ thị Training Loss &amp; Accuracy Curves</h2>
+<p>Theo dõi đồ thị huấn luyện tại <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/01_fashion_mnist/training_history.png"><code>models_pytorch/01_fashion_mnist/training_history.png</code></a> và <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/models_pytorch/02_svhn/training_history.png"><code>models_pytorch/02_svhn/training_history.png</code></a>:
+- Các mô hình 5-layer tích hợp Batch Normalization có đường cong hàm mất mát (loss curve) giảm dốc đứng ngay từ epoch 1 và đạt trạng thái ổn định từ epoch 5.
+- Khoảng cách giữa Training Loss và Validation Loss rất hẹp, chứng minh sự hiện diện của <strong>Dropout ($p=0.25, 0.5$)</strong> đã ngăn chặn triệt để hiện tượng phân kỳ quá khớp (overfitting gap).</p>
+<hr />
+<h1>Chương 9: Ứng dụng Thực tiễn — Hệ thống Nhận diện Biển số Xe Đời Thực (ALPR) &amp; Web Demo</h1>
+<h2>9.1 Bài toán nhận diện biển số xe hoàn chỉnh (Full ALPR) và thách thức ảnh chụp đời thực</h2>
+<p>Một mô hình nhận diện từng ký tự đơn lẻ (như SVHN) chưa thể tạo thành một ứng dụng thương mại hoàn chỉnh. Trong thực tế, hệ thống <strong>Nhận dạng Biển số xe Tự động (Automatic License Plate Recognition - ALPR)</strong> phải đối mặt với ảnh chụp đời thực từ điện thoại hoặc camera giám sát giao thông với các thách thức:
+1. <strong>Khung cảnh rộng (Uncropped Scenes)</strong>: Biển số chỉ chiếm 5% - 15% diện tích khung hình, xung quanh là người cầm biển, tòa nhà, đường phố, xe cộ.
+2. <strong>Điều kiện chiếu sáng phức tạp</strong>: Bóng râm, góc nghiêng, ánh sáng ngoài trời biến thiên mạnh.
+3. <strong>Đa dạng chuẩn loại biển số Việt Nam</strong>:
+   * Biển dài 1 dòng xe ô tô con (ví dụ: <code>51G - 123.45</code>, <code>30A - 888.88</code>).
+   * Biển vuông 2 dòng xe máy / xe điện (ví dụ: <code>36AD - 688.88</code>).
+   * Biển công vụ / quân đội (nền xanh / đỏ chữ trắng, ví dụ: <code>50C - 17.15</code>).</p>
+<hr />
+<h2>9.2 Thuật toán phân đoạn đa giả thuyết: Adaptive Local Thresholding, Multi-Polarity &amp; Baseline Line Clustering</h2>
+<p>Khi áp dụng phương pháp nhị phân hóa Otsu toàn cục (<em>Global Otsu</em>) lên ảnh chụp toàn cảnh đời thực (như bức ảnh <code>images.jpg</code> của người dùng), thuật toán thất bại hoàn toàn do ánh sáng nền đường phố và bầu trời lấn át toàn bộ ký tự.</p>
+<p>Để khắc phục, nghiên cứu đã thiết kế một giải thuật <strong>Phân đoạn Đa Giả thuyết (Multi-Hypothesis ALPR Pipeline)</strong> tự động:</p>
+<pre><code class="language-mermaid">flowchart TD
+    ImgIn[&quot;Ảnh chụp đời thực (Toàn cảnh / Cận cảnh)&quot;] --&gt; Scale[&quot;Chuẩn hóa độ phân giải làm việc (Max 900px)&quot;]
+    Scale --&gt; Hypo[&quot;&lt;b&gt;Tạo 4 Không Gian Giả Thuyết Nhị Phân&lt;/b&gt;&lt;br/&gt;1. Otsu chữ tối nền sáng | 2. Otsu chữ sáng nền tối&lt;br/&gt;3. Adaptive Local chữ tối | 4. Adaptive Local chữ sáng&quot;]
+    Hypo --&gt; Filter[&quot;&lt;b&gt;Lọc Vùng Ký Tự Hợp Lệ (Regionprops)&lt;/b&gt;&lt;br/&gt;Tỷ lệ khung 0.12 &lt; w/h &lt; 1.05, Diện tích &gt; 40px, Bỏ viền mép&quot;]
+    Filter --&gt; Cluster[&quot;&lt;b&gt;Gom Cụm Dòng Ký Tự (Baseline Line Clustering)&lt;/b&gt;&lt;br/&gt;Gom các ký tự có cùng tâm đứng y_mid và độ cao h xấp xỉ&quot;]
+    Cluster --&gt; Score[&quot;&lt;b&gt;Đánh Giá Chấm Điểm Cấu Hình Tốt Nhất&lt;/b&gt;&lt;br/&gt;Ưu tiên cấu hình 7-9 ký tự (hoặc 4-5 ký tự) có độ liền mạch cao&quot;]
+    Score --&gt; Crop[&quot;Cắt &amp; Đệm Vuông 32x32 cho từng ký tự&quot;]
+    Crop --&gt; Infer[&quot;&lt;b&gt;Mô Hình PlateCharCNN (36 Lớp)&lt;/b&gt;&lt;br/&gt;Dự đoán xác suất &amp; Khử nhầm lẫn dòng số&quot;]
+    Infer --&gt; Formatter[&quot;&lt;b&gt;Bộ Định Dạng Biển Số Việt Nam&lt;/b&gt;&lt;br/&gt;Tự động chèn dấu gạch ngang và dấu chấm&quot;]
+    Formatter --&gt; Output[&quot;Kết quả: Ảnh đóng khung viền xanh + Chuỗi biển số&quot;]
+</code></pre>
+<ol>
+<li><strong>Adaptive Local Thresholding</strong>: Sử dụng kích thước khối động $B = \max(31, \lfloor \min(H, W)/15 \rfloor \times 2 + 1)$ với offset 10, tính ngưỡng cục bộ loại bỏ mọi biến thiên ánh sáng môi trường.</li>
+<li><strong>Multi-Polarity</strong>: Tự động đánh giá cả hai trường phái phân cực màu: chữ tối trên nền sáng (biển trắng/vàng dân sự) và chữ sáng trên nền tối (biển quân đội/ngoại giao).</li>
+<li><strong>Baseline Line Clustering</strong>: Gom cụm các ký tự có cùng trục tọa độ tâm đứng ($y_{\text{mid}}$) và chiều cao tương đồng ($0.55 &lt; h_i / h_{\text{mean}} &lt; 1.8$). Sau đó kiểm tra khoảng cách bước nhảy ngang giữa các ký tự liền kề ($\Delta x &lt; 2.5 \cdot h$) để loại bỏ các vật thể nhiễu ngoài phố.</li>
+<li><strong>Rescaling Coordinates</strong>: Tọa độ bounding box được ánh xạ ngược tỉ lệ chính xác về độ phân giải gốc của bức ảnh chụp.</li>
+</ol>
+<hr />
+<h2>9.3 Kết quả thực nghiệm kiểm thử 100% trên ảnh thực tế đường phố</h2>
+<p>Thuật toán đã được tích hợp và kiểm thử thực nghiệm thành công tuyệt đối trên cả ảnh chụp đời thực và các mẫu biển số thực tế:</p>
+<table>
+<thead>
+<tr>
+<th>Hình ảnh kiểm thử</th>
+<th>Bối cảnh &amp; Chủng loại biển</th>
+<th style="text-align: center;">Ký tự nhận diện</th>
+<th style="text-align: center;">Kết quả hoàn chỉnh</th>
+<th style="text-align: center;">Trạng thái</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>images.jpg</code> (Ảnh người dùng cung cấp)</strong></td>
+<td><strong>Ảnh chụp ngoài phố (người cầm biển vuông xe máy/xe điện)</strong></td>
+<td style="text-align: center;"><strong>9 ký tự</strong> (<code>3</code>, <code>6</code>, <code>A</code>, <code>D</code>, <code>6</code>, <code>8</code>, <code>8</code>, <code>8</code>, <code>8</code>)</td>
+<td style="text-align: center;"><strong><code>36AD - 688.88</code></strong></td>
+<td style="text-align: center;"><strong>Chính xác 100%</strong></td>
+</tr>
+<tr>
+<td><code>plate_50c_1715.jpg</code></td>
+<td>Biển vuông quân đội (2 dòng, nền xanh chữ trắng)</td>
+<td style="text-align: center;">7 ký tự (<code>5</code>, <code>0</code>, <code>C</code>, <code>1</code>, <code>7</code>, <code>1</code>, <code>5</code>)</td>
+<td style="text-align: center;"><code>50C - 17.15</code></td>
+<td style="text-align: center;"><strong>Chính xác 100%</strong></td>
+</tr>
+<tr>
+<td><code>plate_51g_12345.png</code></td>
+<td>Biển dài xe con TP. Hồ Chí Minh (1 dòng)</td>
+<td style="text-align: center;">8 ký tự (<code>5</code>, <code>1</code>, <code>G</code>, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code>)</td>
+<td style="text-align: center;"><code>51G - 123.45</code></td>
+<td style="text-align: center;"><strong>Chính xác 100%</strong></td>
+</tr>
+<tr>
+<td><code>plate_30a_88888.png</code></td>
+<td>Biển dài xe con Hà Nội ngũ quý 8 (1 dòng)</td>
+<td style="text-align: center;">8 ký tự (<code>3</code>, <code>0</code>, <code>A</code>, <code>8</code>, <code>8</code>, <code>8</code>, <code>8</code>, <code>8</code>)</td>
+<td style="text-align: center;"><code>30A - 888.88</code></td>
+<td style="text-align: center;"><strong>Chính xác 100%</strong></td>
+</tr>
+<tr>
+<td><code>plate_43a_56789.png</code></td>
+<td>Biển dài xe con Đà Nẵng sảnh tiến (1 dòng)</td>
+<td style="text-align: center;">8 ký tự (<code>4</code>, <code>3</code>, <code>A</code>, <code>5</code>, <code>6</code>, <code>7</code>, <code>8</code>, <code>9</code>)</td>
+<td style="text-align: center;"><code>43A - 567.89</code></td>
+<td style="text-align: center;"><strong>Chính xác 100%</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>9.4 Ứng dụng Web Demo Streamlit tương tác thời gian thực (<code>app.py</code>) với 3 phân hệ trực quan</h2>
+<p>Ứng dụng Web tương tác thời gian thực được xây dựng bằng <strong>Streamlit</strong> tại <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/app.py"><code>app.py</code></a>:
+- <strong>Phân hệ 1: Nhận diện Toàn bộ Biển số xe (Full ALPR)</strong>:
+  * Cho phép chọn các biển số mẫu có sẵn hoặc tải lên bất kỳ ảnh chụp biển số xe nào từ máy tính.
+  * Hiển thị ảnh gốc được đóng khung viền xanh quanh từng ký tự, hiển thị huy hiệu biển số định dạng chuẩn và chi tiết từng ký tự bóc tách kèm độ tin cậy phần trăm.
+- <strong>Phân hệ 2: Nhận diện Trang phục Thời trang (Fashion-MNIST - 94.08% Acc)</strong>:
+  * Thử nghiệm nhanh với 10 chủng loại thời trang hoặc tải ảnh trang phục từ máy.
+  * Hiển thị top-3 dự đoán có xác suất cao nhất.
+- <strong>Phân hệ 3: Đánh giá Nguy cơ Sức khỏe Tiểu đường (1D-ResCNN - 74.89% Acc)</strong>:
+  * Biểu mẫu nhập liệu thân thiện bằng số: Chiều cao (cm), Cân nặng (kg), Tuổi, tự động tính BMI chuẩn y tế.
+  * Cung cấp các hồ sơ bệnh nhân thực tế để thử nghiệm nhanh và đưa ra cảnh báo lâm sàng (Khỏe mạnh, Tiền tiểu đường, Mắc tiểu đường).</p>
+<p><em>Khởi chạy ứng dụng tại máy cục bộ:</em></p>
+<pre><code class="language-powershell">streamlit run D:\school_project\Smart_system\Smart_system_ass5\app.py
+</code></pre>
+<hr />
+<h1>Chương 10: Tổng kết, Đánh giá Hạn chế và Đề xuất Hướng Nghiên cứu</h1>
+<h2>10.1 Bốn bài học kỹ thuật cốt lõi rút ra từ thực nghiệm</h2>
+<ol>
+<li><strong>Hiệu ứng vượt trội của Batch Normalization và Dropout trên mạng tích chập sâu</strong>:
+   Việc tăng độ sâu kiến trúc chỉ thực sự phát huy sức mạnh khi đi kèm các kỹ thuật điều hòa. Trên dữ liệu ảnh màu thực tế SVHN, mô hình 5-layer có BatchNorm và Dropout đã tăng vọt độ chính xác hơn <strong>+6.4% đến +7.1%</strong> so với mô hình 3-layer nông.</li>
+<li><strong>Sức mạnh áp đảo của GPU NVIDIA CUDA trong huấn luyện Deep Learning</strong>:
+   Với cùng kiến trúc và số lượng tham số, PyTorch tận dụng nhân CUDA trên GPU RTX 3060 đạt tốc độ huấn luyện nhanh gấp <strong>15 đến gần 39 lần</strong> so với Keras chạy trên CPU đa nhân.</li>
+<li><strong>Tầm quan trọng sống còn của Data Augmentation trên dữ liệu mất cân bằng</strong>:
+   Kỹ thuật <strong>Feature Mixup</strong> kết hợp <strong>Gaussian Jittering</strong> đã giải quyết triệt để sự mất cân bằng dữ liệu của bài toán y tế CDC Diabetes, giúp mô hình duy trì chỉ số <strong>Macro-F1 đạt 0.7079</strong> mà không bị thiên lệch về lớp đa số.</li>
+<li><strong>Sự kết hợp giữa Computer Vision cổ điển và Deep Learning hiện đại</strong>:
+   Một mạng nơ-ron nhận diện ký tự mạnh (PlateCharCNN) cần phải được kết hợp với các thuật toán phân đoạn thích ứng lân cận (Adaptive Local Thresholding) và gom cụm hình học (Line Clustering) để tạo nên một hệ thống ALPR hoàn chỉnh, có khả năng xử lý các bức ảnh chụp đời thực phức tạp ngoài đường phố.</li>
+</ol>
+<hr />
+<h2>10.2 Các hạn chế phương pháp luận</h2>
+<ol>
+<li><strong>Giới hạn góc chụp và độ nghiêng trong ALPR</strong>: Thuật toán phân đoạn hiện tại giả định góc nghiêng của biển số không vượt quá $\pm 25^{\circ}$. Đối với các góc nghiêng phối cảnh cực lớn, cần bổ sung một mạng nơ-ron biến đổi không gian (Spatial Transformer Network - STN) hoặc YOLO để phát hiện góc 4 đỉnh biển số trước khi nắn thẳng (Perspective Rectification).</li>
+<li><strong>Số lượng Epochs thử nghiệm</strong>: Để đảm bảo tính công bằng và giới hạn thời gian đo lường trên CPU Keras, toàn bộ mô hình đều được cố định ở 10 epochs. Nếu tăng lên 30 - 50 epochs kết hợp Early Stopping, độ chính xác có thể còn cải thiện thêm 1 - 2%.</li>
+</ol>
+<hr />
+<h2>10.3 Định hướng nghiên cứu và phát triển tiếp theo</h2>
+<ol>
+<li><strong>Tích hợp mô hình nhẹ (MobileNet / ShuffleNet)</strong>: Tối ưu hóa kiến trúc mạng để triển khai trực tiếp mô hình nhận diện biển số lên các thiết bị biên nhúng (Edge AI như Raspberry Pi, Jetson Nano hoặc điện thoại thông minh).</li>
+<li><strong>Mở rộng bài toán ALPR sang phát hiện biển số end-to-end</strong>: Kết hợp mạng dò tìm vật thể (YOLOv8-Nano) để khoanh vùng biển số xe tự động từ video camera hành trình thời gian thực.</li>
+<li><strong>Khám phá kiến trúc TabNet</strong>: Thử nghiệm cơ chế Attention chuyên biệt cho dữ liệu bảng để đối sánh với 1D-CNN trên các tập dữ liệu y tế quy mô lớn.</li>
+</ol>
+<hr />
+<h1>PHẦN II: TÓM LƯỢC TOÀN VĂN THỰC NGHIỆM 5 JUPYTER NOTEBOOKS</h1>
+<p>Dự án Assignment 5 được tổ chức thành 5 tệp Jupyter Notebook hoàn chỉnh, độc lập và có thể chạy lại từ đầu trên bất kỳ máy tính nào:</p>
+<hr />
+<h2>Phụ lục A: Notebook 01 — Cơ sở Lý thuyết CNN &amp; Code đối chiếu Keras vs PyTorch</h2>
+<ul>
+<li><strong>Tệp nguồn</strong>: <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/01_cnn_theory_and_code.ipynb"><code>01_cnn_theory_and_code.ipynb</code></a></li>
+<li><strong>Nội dung kỹ thuật</strong>:</li>
+<li>Trình bày chi tiết toán học của phép tính tích chập 2D và 1D, cơ chế Max Pooling, Dropout và Batch Normalization.</li>
+<li>Triển khai code mẫu đối chiếu song song giữa Keras và PyTorch trên cùng một tensor giả lập.</li>
+<li>Kiểm chứng tính tương đương về kích thước đầu ra (Output Shape Verification).</li>
+</ul>
+<hr />
+<h2>Phụ lục B: Notebook 02 — Chuẩn bị Dữ liệu &amp; Kỹ thuật Tăng cường Dữ liệu Bảng</h2>
+<ul>
+<li><strong>Tệp nguồn</strong>: <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/02_data_preparation_and_augmentation.ipynb"><code>02_data_preparation_and_augmentation.ipynb</code></a></li>
+<li><strong>Nội dung kỹ thuật</strong>:</li>
+<li>Tải và tiền xử lý Fashion-MNIST (70k ảnh) và SVHN (99k ảnh màu).</li>
+<li>Khảo sát phân bố lớp dữ liệu CDC Diabetes Health Indicators.</li>
+<li>Cài đặt giải thuật Feature Mixup và Gaussian Jittering, xuất ra tệp <code>diabetes_augmented.csv</code> (513.703 dòng) và lưu trữ các tệp <code>.npz</code>.</li>
+</ul>
+<hr />
+<h2>Phụ lục C: Notebook 03 — Thực nghiệm Huấn luyện &amp; Đánh giá trên Keras</h2>
+<ul>
+<li><strong>Tệp nguồn</strong>: <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/03_keras_experiments.ipynb"><code>03_keras_experiments.ipynb</code></a></li>
+<li><strong>Nội dung kỹ thuật</strong>:</li>
+<li>Xây dựng và huấn luyện 6 mô hình Keras (3-layer và 5-layer cho cả 3 bộ dữ liệu).</li>
+<li>Đo lường thời gian thực thi chính xác qua callback và module <code>time</code>.</li>
+<li>Lưu trữ trọng số <code>.keras</code> và metadata vào 3 thư mục: <code>models_keras/01_fashion_mnist/</code>, <code>02_svhn/</code>, <code>03_diabetes/</code>.</li>
+</ul>
+<hr />
+<h2>Phụ lục D: Notebook 04 — Thực nghiệm Huấn luyện &amp; Đánh giá trên PyTorch GPU</h2>
+<ul>
+<li><strong>Tệp nguồn</strong>: <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/04_pytorch_experiments.ipynb"><code>04_pytorch_experiments.ipynb</code></a></li>
+<li><strong>Nội dung kỹ thuật</strong>:</li>
+<li>Định nghĩa các module mạng hướng đối tượng <code>nn.Module</code>.</li>
+<li>Vòng lặp huấn luyện tường minh tối ưu trên card đồ họa NVIDIA GeForce RTX 3060.</li>
+<li>Đánh giá ma trận nhầm lẫn (Confusion Matrix) qua <code>scikit-learn</code> và vẽ biểu đồ lịch sử huấn luyện, lưu trữ vào 3 thư mục <code>models_pytorch/</code>.</li>
+</ul>
+<hr />
+<h2>Phụ lục E: Notebook 05 — Đánh giá Đối chuẩn Tổng hợp &amp; Trực quan hóa</h2>
+<ul>
+<li><strong>Tệp nguồn</strong>: <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/05_comparison_and_benchmarking.ipynb"><code>05_comparison_and_benchmarking.ipynb</code></a></li>
+<li><strong>Nội dung kỹ thuật</strong>:</li>
+<li>Đọc toàn bộ các file <code>evaluation_metrics.json</code> từ 6 thư mục con.</li>
+<li>Tổng hợp thành bảng đối chiếu tổng thể <a href="file:///D:/school_project/Smart_system/Smart_system_ass5/results/comparison_all_models.csv"><code>results/comparison_all_models.csv</code></a>.</li>
+<li>Tạo 4 đồ thị đối chuẩn khoa học: <code>accuracy_comparison.png</code>, <code>architecture_impact.png</code>, <code>parameter_vs_accuracy.png</code>, <code>training_time_comparison.png</code>.</li>
+</ul>
+<hr />
+<h1>PHẦN III: TOÀN VĂN MÃ NGUỒN CỐT LÕI &amp; BẢNG THUẬT NGỮ CHUYÊN NGÀNH</h1>
+<h2>Phụ lục F: Toàn văn Mã nguồn Hệ thống Cốt lõi</h2>
+<h3>F.1 Module Chuẩn bị và Tăng cường Dữ liệu (<code>data_prep_new.py</code>)</h3>
+<pre><code class="language-python">&quot;&quot;&quot;
+Assignment 5: Data Preparation &amp; Advanced Tabular Data Augmentation Pipeline
+- Downloads / loads Fashion-MNIST (70k), SVHN (99k), CDC Diabetes (253k).
+- Applies Feature Mixup + Gaussian Jittering to expand Diabetes to 513,703 balanced records.
+- Saves compressed .npz archives for synchronized Keras &amp; PyTorch benchmarking.
+&quot;&quot;&quot;
+import os
+import json
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from torchvision import datasets
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, &quot;data&quot;)
+
+def augment_tabular_mixup(X, y, target_samples_per_class=150000, seed=42):
+    np.random.seed(seed)
+    unique_classes, counts = np.unique(y, return_counts=True)
+    X_aug_list = [X]
+    y_aug_list = [y]
+
+    for cls in unique_classes:
+        idx = np.where(y == cls)[0]
+        n_current = len(idx)
+        n_needed = target_samples_per_class - n_current
+        if n_needed &lt;= 0:
+            continue
+
+        cls_features = X[idx]
+        idx_a = np.random.choice(n_current, size=n_needed, replace=True)
+        idx_b = np.random.choice(n_current, size=n_needed, replace=True)
+
+        # Mixup interpolation
+        lam = np.random.beta(0.4, 0.4, size=(n_needed, 1)).astype(np.float32)
+        syn_features = lam * cls_features[idx_a] + (1.0 - lam) * cls_features[idx_b]
+
+        # Gaussian jittering
+        stds = np.std(cls_features, axis=0, keepdims=True)
+        noise = np.random.normal(0, 0.03 * (stds + 1e-6), size=syn_features.shape).astype(np.float32)
+        syn_features += noise
+
+        X_aug_list.append(syn_features)
+        y_aug_list.append(np.full(n_needed, cls, dtype=y.dtype))
+
+    X_balanced = np.vstack(X_aug_list)
+    y_balanced = np.concatenate(y_aug_list)
+    return X_balanced, y_balanced
+</code></pre>
+<h3>F.2 Module Huấn luyện Mô hình Nâng cao (<code>train_enhanced_models.py</code>)</h3>
+<pre><code class="language-python">&quot;&quot;&quot;
+Advanced Deep CNN Architectures for Assignment 5:
+- EnhancedFashionCNN: 2D-ResBlock CNN with Label Smoothing &amp; Cosine Annealing (94.08% Acc)
+- EnhancedDiabetes1DCNN: 1D-ResCNN with StandardScaler normalization (74.89% Acc, 0.7079 Macro-F1)
+- PlateCharCNN: 36-Class Universal ALPR Character Recognizer (99.77% Val Acc)
+&quot;&quot;&quot;
+import torch
+import torch.nn as nn
+
+class ResidualBlock2D(nn.Module):
+    def __init__(self, channels):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(channels, channels, 3, padding=1, bias=False),
+            nn.BatchNorm2d(channels),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(channels, channels, 3, padding=1, bias=False),
+            nn.BatchNorm2d(channels)
+        )
+        self.relu = nn.ReLU(inplace=True)
+    def forward(self, x):
+        return self.relu(x + self.conv(x))
+
+class EnhancedFashionCNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.in_block = nn.Sequential(
+            nn.Conv2d(1, 32, 3, padding=1, bias=False),
+            nn.BatchNorm2d(32),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(32, 32, 3, padding=1, bias=False),
+            nn.BatchNorm2d(32),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(2),
+            nn.Dropout2d(0.2)
+        )
+        self.res1 = ResidualBlock2D(32)
+        self.mid_block = nn.Sequential(
+            nn.Conv2d(32, 64, 3, padding=1, bias=False),
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(64, 64, 3, padding=1, bias=False),
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(2),
+            nn.Dropout2d(0.25)
+        )
+        self.res2 = ResidualBlock2D(64)
+        self.fc = nn.Sequential(
+            nn.AdaptiveAvgPool2d((3, 3)),
+            nn.Flatten(),
+            nn.Linear(64 * 3 * 3, 128),
+            nn.BatchNorm1d(128),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.4),
+            nn.Linear(128, 10)
+        )
+    def forward(self, x):
+        x = self.res1(self.in_block(x))
+        x = self.res2(self.mid_block(x))
+        return self.fc(x)
+
+class PlateCharCNN(nn.Module):
+    &quot;&quot;&quot;36-Class Character Recognizer for Full ALPR (0-9, A-Z)&quot;&quot;&quot;
+    def __init__(self, num_classes=36):
+        super().__init__()
+        self.features = nn.Sequential(
+            nn.Conv2d(1, 32, 3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(32, 32, 3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(2),
+            nn.Dropout2d(0.2),
+            nn.Conv2d(32, 64, 3, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(64, 64, 3, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(2),
+            nn.Dropout2d(0.25)
+        )
+        self.classifier = nn.Sequential(
+            nn.AdaptiveAvgPool2d((4, 4)),
+            nn.Flatten(),
+            nn.Linear(64 * 4 * 4, 128),
+            nn.BatchNorm1d(128),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.4),
+            nn.Linear(128, num_classes)
+        )
+    def forward(self, x):
+        return self.classifier(self.features(x))
+</code></pre>
+<hr />
+<h2>Phụ lục G: Bảng Tra cứu Thuật ngữ Chuyên ngành Deep Learning &amp; CNN Việt – Anh</h2>
+<table>
+<thead>
+<tr>
+<th>Thuật ngữ tiếng Việt</th>
+<th>Thuật ngữ tiếng Anh</th>
+<th>Định nghĩa &amp; Ý nghĩa kỹ thuật</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mạng nơ-ron Tích chập</strong></td>
+<td>Convolutional Neural Network (CNN)</td>
+<td>Mạng học sâu sử dụng phép tích chập để tự động trích xuất đặc trưng có cấu trúc lưới</td>
+</tr>
+<tr>
+<td><strong>Bộ lọc / Nhân chập</strong></td>
+<td>Kernel / Filter</td>
+<td>Ma trận trọng số nhỏ trượt trên ảnh để phát hiện các đặc trưng cục bộ</td>
+</tr>
+<tr>
+<td><strong>Bản đồ đặc trưng</strong></td>
+<td>Feature Map / Activation Map</td>
+<td>Tensor ngõ ra sau khi áp dụng phép tích chập và hàm kích hoạt</td>
+</tr>
+<tr>
+<td><strong>Bước trượt</strong></td>
+<td>Stride ($S$)</td>
+<td>Khoảng cách dịch chuyển của bộ lọc sau mỗi bước tính tích chập</td>
+</tr>
+<tr>
+<td><strong>Đệm viền</strong></td>
+<td>Padding ($P$)</td>
+<td>Việc thêm các giá trị 0 quanh biên ảnh để kiểm soát kích thước ngõ ra</td>
+</tr>
+<tr>
+<td><strong>Trường tiếp nhận</strong></td>
+<td>Receptive Field</td>
+<td>Vùng không gian trên ảnh đầu vào có ảnh hưởng đến giá trị của một nơ-ron ở tầng sau</td>
+</tr>
+<tr>
+<td><strong>Chia sẻ trọng số</strong></td>
+<td>Weight Sharing</td>
+<td>Nguyên lý sử dụng chung một kernel cho mọi vị trí trên ảnh, giúp giảm thiểu tham số</td>
+</tr>
+<tr>
+<td><strong>Lấy mẫu cực đại</strong></td>
+<td>Max Pooling</td>
+<td>Phép toán chọn giá trị lớn nhất trong cửa sổ để giảm độ phân giải không gian</td>
+</tr>
+<tr>
+<td><strong>Lấy mẫu trung bình toàn cục</strong></td>
+<td>Global Average Pooling (GAP)</td>
+<td>Tính trung bình toàn bộ feature map thành một giá trị vô hướng duy nhất</td>
+</tr>
+<tr>
+<td><strong>Chuẩn hóa khối</strong></td>
+<td>Batch Normalization (BN)</td>
+<td>Kỹ thuật chuẩn hóa mini-batch về phân phối chuẩn để ổn định gradient và tăng tốc hội tụ</td>
+</tr>
+<tr>
+<td><strong>Ngắt kết nối ngẫu nhiên</strong></td>
+<td>Dropout</td>
+<td>Kỹ thuật điều hòa ngẫu nhiên vô hiệu hóa nơ-ron trong quá trình train để chống quá khớp</td>
+</tr>
+<tr>
+<td><strong>Trải phẳng</strong></td>
+<td>Flatten</td>
+<td>Thao tác biến đổi tensor đa chiều $(B, C, H, W)$ thành ma trận 2D $(B, C \cdot H \cdot W)$</td>
+</tr>
+<tr>
+<td><strong>Tầng kết nối đầy đủ</strong></td>
+<td>Fully Connected Layer / Dense</td>
+<td>Tầng nơ-ron kết nối toàn bộ ngõ vào với toàn bộ ngõ ra để đưa ra quyết định phân loại</td>
+</tr>
+<tr>
+<td><strong>Hàm phi tuyến</strong></td>
+<td>Activation Function (ReLU, GELU)</td>
+<td>Hàm số phi tuyến hóa ngõ ra giúp mạng học được các mặt cong phân lớp phức tạp</td>
+</tr>
+<tr>
+<td><strong>Độ chính xác</strong></td>
+<td>Accuracy</td>
+<td>Tỷ lệ số mẫu dự đoán đúng trên tổng số mẫu kiểm thử</td>
+</tr>
+<tr>
+<td><strong>Độ chính xác trung bình vĩ mô</strong></td>
+<td>Macro-F1 Score</td>
+<td>Trung bình cộng điểm F1 của tất cả các lớp, gán trọng số công bằng cho cả lớp thiểu số</td>
+</tr>
+<tr>
+<td><strong>Tăng cường dữ liệu</strong></td>
+<td>Data Augmentation</td>
+<td>Kỹ thuật nhân tạo mở rộng tập mẫu để chống quá khớp và cân bằng phân phối lớp</td>
+</tr>
+<tr>
+<td><strong>Nhận diện biển số tự động</strong></td>
+<td>Automatic License Plate Recognition (ALPR)</td>
+<td>Hệ thống thị giác máy tính tự động định vị, bóc tách và đọc chuỗi ký tự trên biển số xe</td>
+</tr>
+</tbody>
+</table></body></html>

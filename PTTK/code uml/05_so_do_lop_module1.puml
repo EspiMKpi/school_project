@@ -1,0 +1,59 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam roundcorner 8
+skinparam shadowing false
+
+class "GDCustomerHome 3" as GDCustomerHome3 <<Boundary>> {
+  + subSearchItem
+  + subOrderOnline
+  + subLogin
+}
+
+class "GDSearchItem 3" as GDSearchItem3 <<Boundary>> {
+  + inSearchKeyword
+  + outItemList
+  + subSearch
+  + subSelectItem
+  + subBack
+}
+
+class "GDItemDetail 3" as GDItemDetail3 <<Boundary>> {
+  + outItemDetail
+  + subAddToCart
+  + subBack
+}
+
+class "Item 3" as Item3 <<Entity>> {
+  - code
+  - name
+  - unit
+  - price
+  - description
+  - stockQuantity
+  - origin
+  - expiryDate
+  + searchItemByName(keyword)
+  + getItemDetail(itemId)
+}
+
+class "Category 3" as Category3 <<Entity>> {
+  - code
+  - name
+  - description
+  + getAllCategories()
+}
+
+class "Customer 3" as Customer3 <<Entity>> {
+  - customerCode
+  - membershipLevel
+}
+
+GDCustomerHome3 ..> GDSearchItem3 : <<navigate>>
+GDSearchItem3 ..> GDItemDetail3 : <<navigate>>
+
+GDSearchItem3 ..> Item3 : <<call>> searchItemByName
+GDItemDetail3 ..> Item3 : <<call>> getItemDetail
+
+Category3 "1" o-- "0..*" Item3
+Customer3 ..> GDCustomerHome3 : <<interacts>>
+@enduml

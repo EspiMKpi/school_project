@@ -70,6 +70,15 @@ ECC-main/
 # Large data/model files inside projects
 **/data/raw/
 **/data/processed/
+**/data/
 **/trained/
 **/models/*.pth
 **/models/*.h5
+*.keras
+*.mat
+*.npz
+*.ubyte
+*.ubyte.gz
+
+# Microsoft Office temporary files
+~$*

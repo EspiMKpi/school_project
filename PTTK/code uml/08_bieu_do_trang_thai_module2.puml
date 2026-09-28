@@ -1,0 +1,30 @@
+@startuml
+skinparam state {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+skinparam roundcorner 8
+
+[*] --> WaitingWarehouseHome : Thủ kho đăng nhập, tại trang chủ kho
+
+state WaitingWarehouseHome : Chờ chọn chức năng quản lý kho (GDWarehouseHome 3)
+
+WaitingWarehouseHome --> WaitingSelectOrder : Thủ kho click menu duyệt đơn hàng (clickBrowseOrders)
+
+state WaitingSelectOrder : Hiển thị danh sách đơn hàng chưa xuất, chờ chọn đơn (GDBrowseOrder 3)
+
+WaitingSelectOrder --> WaitingSelectDeliveryStaff : Thủ kho click chọn một đơn hàng chưa xuất (selectUnexportedOrder)
+
+state WaitingSelectDeliveryStaff : Hiển thị chi tiết đơn và DS NV giao hàng sẵn sàng, chờ gán và cập nhật (GDExportOrder 3)
+
+WaitingSelectDeliveryStaff --> WaitingPrintInvoice : Thủ kho chọn NV giao hàng và click Xuất kho (updateExportStatus)
+
+state WaitingPrintInvoice : Hiển thị hóa đơn bán hàng, chờ in (GDInvoice 3)
+
+WaitingPrintInvoice --> WaitingWarehouseHome : Thủ kho click In hóa đơn & hoàn tất bàn giao (confirmPrintAndDeliver)
+
+WaitingSelectDeliveryStaff --> WaitingSelectOrder : Thủ kho click Quay lại (clickBack)
+WaitingSelectOrder --> WaitingWarehouseHome : Thủ kho click Quay lại (clickBack)
+WaitingWarehouseHome --> [*] : Kết thúc phiên
+@enduml

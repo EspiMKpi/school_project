@@ -1,0 +1,8 @@
+Assignment 5
+1. tìm hiểu các khái nhiệm cơ bản để hiểu CNN và các hàm code
+2. Data cần gồm có 3 dataset , 2 loại là về ảnh, 1 tập là diabets (yêu cầu tập dữ liệu lớn)
+3. xây dựng mô hình CNN (keras) theo 2 dạng:
+    -3 layer
+    -5 layer
+sau đó so sánh và đánh giá
+4. làm như yêu cầu 3 nhưng sử dụng mô hình CNN (pytorch)

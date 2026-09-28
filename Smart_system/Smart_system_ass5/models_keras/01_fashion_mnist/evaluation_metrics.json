@@ -1,0 +1,24 @@
+{
+    "dataset": "fashion_mnist",
+    "framework": "Keras",
+    "models": {
+        "3_layer": {
+            "params": 50186,
+            "training_time_seconds": 161.92,
+            "test_loss": 0.2675,
+            "test_accuracy": 0.9049,
+            "macro_f1": 0.9026,
+            "epochs": 10,
+            "batch_size": 128
+        },
+        "5_layer": {
+            "params": 469098,
+            "training_time_seconds": 1293.91,
+            "test_loss": 0.2104,
+            "test_accuracy": 0.9232,
+            "macro_f1": 0.923,
+            "epochs": 10,
+            "batch_size": 128
+        }
+    }
+}

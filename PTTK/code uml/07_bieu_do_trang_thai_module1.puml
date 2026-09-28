@@ -1,0 +1,29 @@
+@startuml
+skinparam state {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+skinparam roundcorner 8
+
+[*] --> WaitingCustomerHome : Khách hàng mở trang chủ
+
+state WaitingCustomerHome : Chờ khách hàng thao tác trên màn hình chính
+
+WaitingCustomerHome --> WaitingSearchKeyword : Khách hàng click menu tìm kiếm (clickSearchItem)
+
+state WaitingSearchKeyword : Chờ nhập từ khóa tìm kiếm (GDSearchItem 3)
+
+WaitingSearchKeyword --> WaitingSelectFromItemList : Khách hàng nhập từ khóa và click Tìm kiếm (enterKeywordAndSubmit)
+
+state WaitingSelectFromItemList : Hiển thị danh sách kết quả, chờ chọn mặt hàng
+
+WaitingSelectFromItemList --> WaitingViewItemDetail : Khách hàng click chọn một mặt hàng (selectItem)
+
+state WaitingViewItemDetail : Hiển thị chi tiết mặt hàng (GDItemDetail 3)
+
+WaitingViewItemDetail --> WaitingSelectFromItemList : Khách hàng click Quay lại (clickBack)
+WaitingViewItemDetail --> WaitingCustomerHome : Khách hàng click Về trang chủ (clickHome)
+WaitingSelectFromItemList --> WaitingCustomerHome : Khách hàng click Về trang chủ (clickHome)
+WaitingCustomerHome --> [*] : Kết thúc phiên
+@enduml

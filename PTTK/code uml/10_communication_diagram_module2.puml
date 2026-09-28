@@ -1,0 +1,39 @@
+@startuml
+skinparam object {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+skinparam roundcorner 8
+skinparam shadowing false
+
+object "ws : WarehouseStaff 3" as ws
+object "gdHome : GDWarehouseHome 3" as gdHome
+object "gdBrowse : GDBrowseOrder 3" as gdBrowse
+object "order : Order 3" as order
+object "gdExport : GDExportOrder 3" as gdExport
+object "staff : DeliveryStaff 3" as staff
+object "invoice : Invoice 3" as invoice
+object "gdInvoice : GDInvoice 3" as gdInvoice
+
+ws -> gdHome : 1: clickBrowseOrders()
+gdHome -> gdBrowse : 2: display()
+gdBrowse -> order : 3: getUnexportedOrders()
+order --> gdBrowse : 4: return unexportedList
+gdBrowse --> ws : 5: displayUnexportedList(unexportedList)
+ws -> gdBrowse : 6: selectUnexportedOrder(orderId)
+gdBrowse -> gdExport : 7: display()
+gdExport -> order : 8: getOrderDetail(orderId)
+order --> gdExport : 9: return orderDetail
+gdExport -> staff : 10: getAvailableDeliveryStaff()
+staff --> gdExport : 11: return staffList
+gdExport --> ws : 12: displayOrderDetailAndStaff(orderDetail, staffList)
+ws -> gdExport : 13: selectStaffAndUpdateStatus(orderId, staffId)
+gdExport -> order : 14: updateExportStatus(orderId, staffId)
+order --> gdExport : 15: return success
+gdExport -> invoice : 16: createInvoice(orderId, warehouseStaffId)
+invoice --> gdExport : 17: return invoiceData
+gdExport -> gdInvoice : 18: display()
+gdInvoice --> ws : 19: displayInvoice(invoiceData)
+ws -> gdInvoice : 20: printAndDeliver(invoiceId)
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+skinparam object {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+skinparam roundcorner 8
+skinparam shadowing false
+
+object "c : Customer 3" as c
+object "gdHome : GDCustomerHome 3" as gdHome
+object "gdSearch : GDSearchItem 3" as gdSearch
+object "item : Item 3" as item
+object "gdDetail : GDItemDetail 3" as gdDetail
+
+c -> gdHome : 1: clickSearchItem()
+gdHome -> gdSearch : 2: display()
+c -> gdSearch : 3: enterKeywordAndSubmit(keyword)
+gdSearch -> item : 4: searchItemByName(keyword)
+item --> gdSearch : 5: return itemList
+gdSearch --> c : 6: displayItemList(itemList)
+c -> gdSearch : 7: selectItem(itemId)
+gdSearch -> gdDetail : 8: display()
+gdDetail -> item : 9: getItemDetail(itemId)
+item --> gdDetail : 10: return itemDetail
+gdDetail --> c : 11: displayItemDetail(itemDetail)
+c -> gdDetail : 12: clickBackOrFinish()
+@enduml

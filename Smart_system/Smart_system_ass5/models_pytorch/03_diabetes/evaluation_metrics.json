@@ -1,0 +1,26 @@
+{
+    "dataset": "diabetes",
+    "framework": "PyTorch (CUDA)",
+    "device": "cuda",
+    "models": {
+        "3_layer": {
+            "params": 7299,
+            "training_time_seconds": 46.16,
+            "test_loss": 0.6238,
+            "test_accuracy": 0.7,
+            "macro_f1": 0.6664,
+            "epochs": 10,
+            "batch_size": 256
+        },
+        "5_layer": {
+            "params": 43043,
+            "training_time_seconds": 59.99,
+            "test_loss": 0.5822,
+            "test_accuracy": 0.7489,
+            "macro_f1": 0.7079,
+            "epochs": 10,
+            "batch_size": 256,
+            "note": "Enhanced with StandardScaler + 1D-ResCNN"
+        }
+    }
+}

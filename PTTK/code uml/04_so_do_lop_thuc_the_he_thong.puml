@@ -1,0 +1,182 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam roundcorner 8
+skinparam shadowing false
+
+class "User 3" as User3 {
+  username
+  password
+  role
+  email
+  phone
+  note
+}
+
+class "FullName 3" as FullName3 {
+  firstName
+  middleName
+  lastName
+}
+
+class "Address 3" as Address3 {
+  houseNumber
+  street
+  ward
+  district
+  city
+}
+
+class "Customer 3" as Customer3 {
+  customerCode
+  membershipLevel
+  rewardPoints
+}
+
+class "Staff 3" as Staff3 {
+  staffCode
+  position
+  salaryRate
+}
+
+class "WarehouseStaff 3" as WarehouseStaff3 {
+  warehouseArea
+}
+
+class "Saler 3" as Saler3 {
+  counterNumber
+}
+
+class "ManagementStaff 3" as ManagementStaff3 {
+  department
+}
+
+class "DeliveryStaff 3" as DeliveryStaff3 {
+  vehicleNumber
+  deliveryArea
+  deliveryStatus
+}
+
+class "Supplier 3" as Supplier3 {
+  code
+  name
+  taxCode
+  phone
+  email
+  bankAccount
+  note
+}
+
+class "Category 3" as Category3 {
+  code
+  name
+  description
+}
+
+class "Item 3" as Item3 {
+  code
+  name
+  unit
+  price
+  description
+  stockQuantity
+  origin
+  expiryDate
+}
+
+class "ImportSlip 3" as ImportSlip3 {
+  code
+  importDate
+  totalAmount
+  note
+}
+
+class "ImportSlipDetail 3" as ImportSlipDetail3 {
+  quantity
+  importPrice
+  amount
+}
+
+class "Order 3" as Order3 {
+  code
+  orderDate
+  status
+  totalAmount
+  deliveryAddress
+  recipientPhone
+  note
+}
+
+class "OrderItem 3" as OrderItem3 {
+  quantity
+  unitPrice
+  discount
+  amount
+}
+
+class "Invoice 3" as Invoice3 {
+  code
+  createdDate
+  paymentMethod
+  totalAmount
+  paymentStatus
+  note
+}
+
+class "Statistic 3" as Statistic3 {
+  startDate
+  endDate
+  description
+}
+
+class "ItemStatistic 3" as ItemStatistic3 {
+  totalQuantitySold
+  totalRevenue
+}
+
+class "SupplierStatistic 3" as SupplierStatistic3 {
+  totalImportAmount
+  totalImportSlips
+}
+
+class "RevenueStatistic 3" as RevenueStatistic3 {
+  totalOrders
+  totalRevenue
+  netProfit
+}
+
+' Inheritance
+User3 <|-- Customer3
+User3 <|-- Staff3
+Staff3 <|-- WarehouseStaff3
+Staff3 <|-- Saler3
+Staff3 <|-- ManagementStaff3
+Staff3 <|-- DeliveryStaff3
+
+Statistic3 <|-- ItemStatistic3
+Statistic3 <|-- SupplierStatistic3
+Statistic3 <|-- RevenueStatistic3
+
+' Composition & Associations
+User3 *-- "1" FullName3
+User3 *-- "1" Address3
+Supplier3 *-- "1" Address3
+
+Category3 "1" o-- "0..*" Item3 : categorizes
+
+WarehouseStaff3 "1" -- "0..*" ImportSlip3 : imports
+Supplier3 "1" -- "0..*" ImportSlip3 : supplies
+ImportSlip3 "1" *-- "1..*" ImportSlipDetail3 : contains
+Item3 "1" -- "0..*" ImportSlipDetail3 : imported in
+
+Customer3 "1" -- "0..*" Order3 : places
+Order3 "1" *-- "1..*" OrderItem3 : contains
+Item3 "1" -- "0..*" OrderItem3 : ordered in
+
+WarehouseStaff3 "1" -- "0..*" Order3 : approves/exports
+DeliveryStaff3 "1" -- "0..*" Order3 : delivers
+
+Order3 "1" -- "1" Invoice3 : generates
+WarehouseStaff3 "1" -- "0..*" Invoice3 : prints
+
+ManagementStaff3 "1" -- "0..*" Statistic3 : views
+@enduml

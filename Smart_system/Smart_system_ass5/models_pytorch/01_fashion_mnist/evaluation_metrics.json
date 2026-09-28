@@ -1,0 +1,26 @@
+{
+    "dataset": "fashion_mnist",
+    "framework": "PyTorch (GPU)",
+    "device": "cuda",
+    "models": {
+        "3_layer": {
+            "params": 50186,
+            "training_time_seconds": 19.91,
+            "test_loss": 0.2598,
+            "test_accuracy": 0.9084,
+            "macro_f1": 0.9082,
+            "epochs": 10,
+            "batch_size": 128
+        },
+        "5_layer": {
+            "params": 468458,
+            "training_time_seconds": 36.77,
+            "test_loss": 0.1947,
+            "test_accuracy": 0.9408,
+            "macro_f1": 0.9407,
+            "epochs": 10,
+            "batch_size": 128,
+            "note": "Enhanced with Residual Blocks, Label Smoothing & Cosine Annealing"
+        }
+    }
+}

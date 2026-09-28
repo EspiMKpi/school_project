@@ -1,0 +1,89 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam roundcorner 8
+skinparam shadowing false
+
+class "GDWarehouseHome 3" as GDWarehouseHome3 <<Boundary>> {
+  + subBrowseOrder
+  + subImportGoods
+  + subManageItem
+  + subManageSupplier
+}
+
+class "GDBrowseOrder 3" as GDBrowseOrder3 <<Boundary>> {
+  + outUnexportedOrders
+  + subSelectOrder
+  + subRefresh
+}
+
+class "GDExportOrder 3" as GDExportOrder3 <<Boundary>> {
+  + outOrderDetail
+  + outDeliveryStaffList
+  + inSelectedDeliveryStaff
+  + subUpdateExport
+  + subBack
+}
+
+class "GDInvoice 3" as GDInvoice3 <<Boundary>> {
+  + outInvoiceData
+  + subPrint
+  + subFinish
+}
+
+class "Order 3" as Order3 <<Entity>> {
+  - code
+  - orderDate
+  - status
+  - totalAmount
+  - deliveryAddress
+  - recipientPhone
+  - note
+  + getUnexportedOrders()
+  + getOrderDetail(orderId)
+  + updateExportStatus(orderId, deliveryStaffId)
+}
+
+class "OrderItem 3" as OrderItem3 <<Entity>> {
+  - quantity
+  - unitPrice
+  - amount
+}
+
+class "DeliveryStaff 3" as DeliveryStaff3 <<Entity>> {
+  - staffCode
+  - vehicleNumber
+  - deliveryArea
+  - deliveryStatus
+  + getAvailableDeliveryStaff()
+}
+
+class "Invoice 3" as Invoice3 <<Entity>> {
+  - code
+  - createdDate
+  - paymentMethod
+  - totalAmount
+  - paymentStatus
+  + createInvoice(orderId, warehouseStaffId)
+  + getInvoiceData(invoiceId)
+}
+
+class "WarehouseStaff 3" as WarehouseStaff3 <<Entity>> {
+  - staffCode
+  - warehouseArea
+}
+
+GDWarehouseHome3 ..> GDBrowseOrder3 : <<navigate>>
+GDBrowseOrder3 ..> GDExportOrder3 : <<navigate>>
+GDExportOrder3 ..> GDInvoice3 : <<navigate>>
+
+GDBrowseOrder3 ..> Order3 : <<call>> getUnexportedOrders
+GDExportOrder3 ..> Order3 : <<call>> getOrderDetail
+GDExportOrder3 ..> DeliveryStaff3 : <<call>> getAvailableDeliveryStaff
+GDExportOrder3 ..> Order3 : <<call>> updateExportStatus
+GDExportOrder3 ..> Invoice3 : <<call>> createInvoice
+GDInvoice3 ..> Invoice3 : <<call>> getInvoiceData
+
+Order3 "1" *-- "1..*" OrderItem3
+Order3 "1" -- "1" Invoice3
+WarehouseStaff3 ..> GDWarehouseHome3 : <<interacts>>
+@enduml

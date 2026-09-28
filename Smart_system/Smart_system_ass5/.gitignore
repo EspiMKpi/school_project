@@ -1,0 +1,17 @@
+# Data files & archives
+data/**/*.tar.gz
+data/**/*.zip
+data/**/*.csv
+data/**/*.npz
+data/**/raw/
+
+# Model weights
+*.pth
+*.pt
+*.keras
+*.h5
+
+# Python cache & checkpoints
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

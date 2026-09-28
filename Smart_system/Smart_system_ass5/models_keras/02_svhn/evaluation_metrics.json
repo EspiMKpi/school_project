@@ -1,0 +1,24 @@
+{
+    "dataset": "svhn",
+    "framework": "Keras",
+    "models": {
+        "3_layer": {
+            "params": 60362,
+            "training_time_seconds": 345.61,
+            "test_loss": 0.5741,
+            "test_accuracy": 0.8484,
+            "macro_f1": 0.8303,
+            "epochs": 10,
+            "batch_size": 128
+        },
+        "5_layer": {
+            "params": 592554,
+            "training_time_seconds": 2548.41,
+            "test_loss": 0.2802,
+            "test_accuracy": 0.9194,
+            "macro_f1": 0.9132,
+            "epochs": 10,
+            "batch_size": 128
+        }
+    }
+}

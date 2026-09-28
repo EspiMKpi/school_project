@@ -1,0 +1,24 @@
+{
+    "dataset": "diabetes",
+    "framework": "Keras",
+    "models": {
+        "3_layer": {
+            "params": 7299,
+            "training_time_seconds": 81.04,
+            "test_loss": 0.6467,
+            "test_accuracy": 0.6925,
+            "macro_f1": 0.6584,
+            "epochs": 10,
+            "batch_size": 256
+        },
+        "5_layer": {
+            "params": 43555,
+            "training_time_seconds": 213.09,
+            "test_loss": 0.6516,
+            "test_accuracy": 0.6862,
+            "macro_f1": 0.6638,
+            "epochs": 10,
+            "batch_size": 256
+        }
+    }
+}

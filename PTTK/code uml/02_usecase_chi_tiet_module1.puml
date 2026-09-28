@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam shadowing false
+skinparam roundcorner 8
+
+actor "Customer 3" as Customer3
+
+rectangle "Module 1: Customer searches for items" {
+  usecase "SearchItem 3\n(Tìm kiếm mặt hàng)" as UC_SearchItem3
+  usecase "SelectSearchMenu 3\n(Chọn menu tìm kiếm)" as UC_SelectMenu3
+  usecase "EnterSearchKeyword 3\n(Nhập từ khóa tìm kiếm)" as UC_EnterKeyword3
+  usecase "DisplayItemList 3\n(Hiển thị danh sách mặt hàng)" as UC_DisplayList3
+  usecase "ViewItemDetail 3\n(Xem chi tiết mặt hàng)" as UC_ViewDetail3
+  usecase "FilterByCategory 3\n(Lọc theo danh mục)" as UC_FilterCat3
+}
+
+Customer3 --> UC_SearchItem3
+
+UC_SearchItem3 ..> UC_SelectMenu3 : <<include>>
+UC_SearchItem3 ..> UC_EnterKeyword3 : <<include>>
+UC_SearchItem3 ..> UC_DisplayList3 : <<include>>
+UC_ViewDetail3 ..> UC_DisplayList3 : <<extend>>
+UC_FilterCat3 ..> UC_SearchItem3 : <<extend>>
+@enduml

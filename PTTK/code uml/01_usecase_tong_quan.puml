@@ -1,0 +1,88 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam shadowing false
+skinparam roundcorner 8
+
+actor "User 3\n(Người dùng)" as User3
+actor "Member 3\n(Thành viên)" as Member3
+actor "Customer 3\n(Khách hàng)" as Customer3
+actor "Staff 3\n(Nhân viên)" as Staff3
+actor "WarehouseStaff 3\n(Thủ kho)" as WarehouseStaff3
+actor "Saler 3\n(Nhân viên bán hàng)" as Saler3
+actor "ManagementStaff 3\n(Nhân viên quản lý)" as ManagementStaff3
+actor "DeliveryStaff 3\n(Nhân viên giao hàng)" as DeliveryStaff3
+
+' Hierarchy of Actors
+User3 <|-- Member3
+User3 <|-- Customer3
+Member3 <|-- Staff3
+Member3 <|-- Customer3
+Staff3 <|-- WarehouseStaff3
+Staff3 <|-- Saler3
+Staff3 <|-- ManagementStaff3
+Staff3 <|-- DeliveryStaff3
+
+rectangle "Hệ thống Quản lý Siêu thị Trực tuyến (Online Supermarket Management System)" {
+  ' Common Use Cases
+  usecase "Login 3" as UC_Login3
+  usecase "Logout 3" as UC_Logout3
+  usecase "ChangePassword 3" as UC_ChangePassword3
+  
+  ' Customer Use Cases
+  usecase "RegisterMember 3" as UC_RegisterMember3
+  usecase "SearchItem 3" as UC_SearchItem3
+  usecase "OrderOnline 3" as UC_OrderOnline3
+  usecase "BuyAtCounter 3" as UC_BuyAtCounter3
+  
+  ' Saler Use Cases
+  usecase "SellAtCounter 3" as UC_SellAtCounter3
+  usecase "CreateCounterInvoice 3" as UC_CreateCounterInvoice3
+  
+  ' Warehouse Staff Use Cases
+  usecase "ImportGoods 3" as UC_ImportGoods3
+  usecase "ManageItem 3" as UC_ManageItem3
+  usecase "ManageSupplier 3" as UC_ManageSupplier3
+  usecase "BrowseAndExportOrder 3" as UC_BrowseAndExportOrder3
+  
+  ' Delivery Staff Use Cases
+  usecase "DeliverOrder 3" as UC_DeliverOrder3
+  
+  ' Management Staff Use Cases
+  usecase "ManageGeneralInfo 3" as UC_ManageGeneralInfo3
+  usecase "ViewStatistics 3" as UC_ViewStatistics3
+  usecase "ViewItemStats 3" as UC_ViewItemStats3
+  usecase "ViewSupplierStats 3" as UC_ViewSupplierStats3
+  usecase "ViewRevenueStats 3" as UC_ViewRevenueStats3
+}
+
+' Actor to Use Case Connections
+User3 --> UC_Login3
+Member3 --> UC_Logout3
+Member3 --> UC_ChangePassword3
+
+Customer3 --> UC_RegisterMember3
+Customer3 --> UC_SearchItem3
+Customer3 --> UC_OrderOnline3
+Customer3 --> UC_BuyAtCounter3
+
+Saler3 --> UC_SellAtCounter3
+Saler3 --> UC_CreateCounterInvoice3
+UC_BuyAtCounter3 ..> UC_SellAtCounter3 : <<interact>>
+
+WarehouseStaff3 --> UC_ImportGoods3
+WarehouseStaff3 --> UC_ManageItem3
+WarehouseStaff3 --> UC_ManageSupplier3
+WarehouseStaff3 --> UC_BrowseAndExportOrder3
+UC_BrowseAndExportOrder3 ..> DeliveryStaff3 : <<handover to>>
+
+DeliveryStaff3 --> UC_DeliverOrder3
+
+ManagementStaff3 --> UC_ManageGeneralInfo3
+ManagementStaff3 --> UC_ViewStatistics3
+
+UC_ViewStatistics3 <|-- UC_ViewItemStats3
+UC_ViewStatistics3 <|-- UC_ViewSupplierStats3
+UC_ViewStatistics3 <|-- UC_ViewRevenueStats3
+@enduml

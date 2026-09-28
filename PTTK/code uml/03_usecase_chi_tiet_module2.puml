@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam shadowing false
+skinparam roundcorner 8
+
+actor "WarehouseStaff 3\n(Thủ kho)" as WarehouseStaff3
+actor "DeliveryStaff 3\n(NV Giao hàng)" as DeliveryStaff3
+
+rectangle "Module 2: Warehouse staff approves orders + export" {
+  usecase "BrowseAndExportOrder 3\n(Duyệt và xuất đơn hàng)" as UC_BrowseExport3
+  usecase "SelectBrowseOrderMenu 3\n(Chọn menu duyệt đơn hàng)" as UC_SelectMenu3
+  usecase "DisplayUnexportedOrders 3\n(Hiển thị đơn hàng chưa xuất)" as UC_DisplayOrders3
+  usecase "SelectUnexportedOrder 3\n(Chọn đơn hàng chưa xuất)" as UC_SelectOrder3
+  usecase "AssignDeliveryStaff 3\n(Chọn NV giao hàng phụ trách)" as UC_AssignStaff3
+  usecase "UpdateExportStatus 3\n(Cập nhật trạng thái xuất đơn)" as UC_UpdateStatus3
+  usecase "PrintInvoice 3\n(In hóa đơn bán hàng)" as UC_PrintInvoice3
+  usecase "HandoverGoodsAndInvoice 3\n(Bàn giao hàng và hóa đơn)" as UC_Handover3
+}
+
+WarehouseStaff3 --> UC_BrowseExport3
+
+UC_BrowseExport3 ..> UC_SelectMenu3 : <<include>>
+UC_BrowseExport3 ..> UC_DisplayOrders3 : <<include>>
+UC_BrowseExport3 ..> UC_SelectOrder3 : <<include>>
+UC_BrowseExport3 ..> UC_AssignStaff3 : <<include>>
+UC_BrowseExport3 ..> UC_UpdateStatus3 : <<include>>
+UC_BrowseExport3 ..> UC_PrintInvoice3 : <<include>>
+UC_BrowseExport3 ..> UC_Handover3 : <<include>>
+
+UC_Handover3 ..> DeliveryStaff3 : <<interact>>
+@enduml

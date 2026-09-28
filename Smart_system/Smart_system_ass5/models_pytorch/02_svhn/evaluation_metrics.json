@@ -1,0 +1,25 @@
+{
+    "dataset": "svhn",
+    "framework": "PyTorch (GPU)",
+    "device": "cuda",
+    "models": {
+        "3_layer": {
+            "params": 60362,
+            "training_time_seconds": 28.4,
+            "test_loss": 0.5282,
+            "test_accuracy": 0.8642,
+            "macro_f1": 0.8505,
+            "epochs": 10,
+            "batch_size": 128
+        },
+        "5_layer": {
+            "params": 591914,
+            "training_time_seconds": 66.19,
+            "test_loss": 0.2534,
+            "test_accuracy": 0.9286,
+            "macro_f1": 0.9218,
+            "epochs": 10,
+            "batch_size": 128
+        }
+    }
+}
